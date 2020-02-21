@@ -1,6 +1,6 @@
 package com.hdbl.erp.sevice;
 
-import com.hdbl.erp.dao.UserBean;
+import com.hdbl.erp.entity.UserBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;

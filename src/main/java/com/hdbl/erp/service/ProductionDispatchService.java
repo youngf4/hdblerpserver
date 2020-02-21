@@ -1,6 +1,6 @@
 package com.hdbl.erp.sevice;
 
-import com.hdbl.erp.dao.ProductionDispatch;
+import com.hdbl.erp.entity.ProductionDispatch;
 
 import java.util.ArrayList;
 

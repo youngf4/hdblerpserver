@@ -1,6 +1,6 @@
 package com.hdbl.erp.sevice;
 
-import com.hdbl.erp.dao.ProdNotification;
+import com.hdbl.erp.entity.ProdNotification;
 
 import java.util.ArrayList;
 import java.util.HashMap;
