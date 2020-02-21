@@ -8,27 +8,27 @@ public class ProdNotification {
     * */
 
     private int id;
-    private Date creat_time;
-    private Date update_time;
+    private Date creatTime;
+    private Date updateTime;
     private int state;
     private boolean visibility;
     private String notice_number;
     private String working_number;
-    private String order_unit;
-    private String delivery_method;
-    private String delivery_state;
-    private String delivery_place;
-    private boolean is_in_batches;
-    private Date delivery_date;
+    private String orderUnit;
+    private String deliveryMethod;
+    private String deliveryState;
+    private String deliveryPlace;
+    private boolean isInBatches;
+    private Date deliveryDate;
     private String remark;
-    private int compiling_person;
-    private Date submit_time;
+    private int compilingPerson;
+    private Date submitTime;
     private int auditor;
-    private Date audit_time;
-    private String audit_remark;
+    private Date auditTime;
+    private String auditRemark;
     private int approver;
-    private Date approve_time;
-    private String approve_remark;
+    private Date approveTime;
+    private String approveRemark;
 //    private List<Production> productinons;//产品列表
 
 
@@ -40,20 +40,20 @@ public class ProdNotification {
         this.id = id;
     }
 
-    public Date getCreat_time() {
-        return creat_time;
+    public Date getCreatTime() {
+        return creatTime;
     }
 
-    public void setCreat_time(Date creat_time) {
-        this.creat_time = creat_time;
+    public void setCreatTime(Date creatTime) {
+        this.creatTime = creatTime;
     }
 
-    public Date getUpdate_time() {
-        return update_time;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdate_time(Date update_time) {
-        this.update_time = update_time;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public int getState() {
@@ -88,52 +88,52 @@ public class ProdNotification {
         this.working_number = working_number;
     }
 
-    public String getOrder_unit() {
-        return order_unit;
+    public String getOrderUnit() {
+        return orderUnit;
     }
 
-    public void setOrder_unit(String order_unit) {
-        this.order_unit = order_unit;
+    public void setOrderUnit(String orderUnit) {
+        this.orderUnit = orderUnit;
     }
 
-    public String getDelivery_method() {
-        return delivery_method;
+    public String getDeliveryMethod() {
+        return deliveryMethod;
     }
 
-    public void setDelivery_method(String delivery_method) {
-        this.delivery_method = delivery_method;
+    public void setDeliveryMethod(String deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
     }
 
-    public String getDelivery_state() {
-        return delivery_state;
+    public String getDeliveryState() {
+        return deliveryState;
     }
 
-    public void setDelivery_state(String delivery_state) {
-        this.delivery_state = delivery_state;
+    public void setDeliveryState(String deliveryState) {
+        this.deliveryState = deliveryState;
     }
 
-    public String getDelivery_place() {
-        return delivery_place;
+    public String getDeliveryPlace() {
+        return deliveryPlace;
     }
 
-    public void setDelivery_place(String delivery_place) {
-        this.delivery_place = delivery_place;
+    public void setDeliveryPlace(String deliveryPlace) {
+        this.deliveryPlace = deliveryPlace;
     }
 
-    public boolean isIs_in_batches() {
-        return is_in_batches;
+    public boolean isInBatches() {
+        return isInBatches;
     }
 
-    public void setIs_in_batches(boolean is_in_batches) {
-        this.is_in_batches = is_in_batches;
+    public void setInBatches(boolean inBatches) {
+        isInBatches = inBatches;
     }
 
-    public Date getDelivery_date() {
-        return delivery_date;
+    public Date getDeliveryDate() {
+        return deliveryDate;
     }
 
-    public void setDelivery_date(Date delivery_date) {
-        this.delivery_date = delivery_date;
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     public String getRemark() {
@@ -144,20 +144,20 @@ public class ProdNotification {
         this.remark = remark;
     }
 
-    public int getCompiling_person() {
-        return compiling_person;
+    public int getCompilingPerson() {
+        return compilingPerson;
     }
 
-    public void setCompiling_person(int compiling_person) {
-        this.compiling_person = compiling_person;
+    public void setCompilingPerson(int compilingPerson) {
+        this.compilingPerson = compilingPerson;
     }
 
-    public Date getSubmit_time() {
-        return submit_time;
+    public Date getSubmitTime() {
+        return submitTime;
     }
 
-    public void setSubmit_time(Date submit_time) {
-        this.submit_time = submit_time;
+    public void setSubmitTime(Date submitTime) {
+        this.submitTime = submitTime;
     }
 
     public int getAuditor() {
@@ -168,20 +168,20 @@ public class ProdNotification {
         this.auditor = auditor;
     }
 
-    public Date getAudit_time() {
-        return audit_time;
+    public Date getAuditTime() {
+        return auditTime;
     }
 
-    public void setAudit_time(Date audit_time) {
-        this.audit_time = audit_time;
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
     }
 
-    public String getAudit_remark() {
-        return audit_remark;
+    public String getAuditRemark() {
+        return auditRemark;
     }
 
-    public void setAudit_remark(String audit_remark) {
-        this.audit_remark = audit_remark;
+    public void setAuditRemark(String auditRemark) {
+        this.auditRemark = auditRemark;
     }
 
     public int getApprover() {
@@ -192,47 +192,47 @@ public class ProdNotification {
         this.approver = approver;
     }
 
-    public Date getApprove_time() {
-        return approve_time;
+    public Date getApproveTime() {
+        return approveTime;
     }
 
-    public void setApprove_time(Date approve_time) {
-        this.approve_time = approve_time;
+    public void setApproveTime(Date approveTime) {
+        this.approveTime = approveTime;
     }
 
-    public String getApprove_remark() {
-        return approve_remark;
+    public String getApproveRemark() {
+        return approveRemark;
     }
 
-    public void setApprove_remark(String approve_remark) {
-        this.approve_remark = approve_remark;
+    public void setApproveRemark(String approveRemark) {
+        this.approveRemark = approveRemark;
     }
 
     @Override
     public String toString() {
         return "ProdNotification{" +
                 "id=" + id +
-                ", creat_time=" + creat_time +
-                ", update_time=" + update_time +
+                ", creatTime=" + creatTime +
+                ", updateTime=" + updateTime +
                 ", state=" + state +
                 ", visibility=" + visibility +
                 ", notice_number='" + notice_number + '\'' +
                 ", working_number='" + working_number + '\'' +
-                ", order_unit='" + order_unit + '\'' +
-                ", delivery_method='" + delivery_method + '\'' +
-                ", delivery_state='" + delivery_state + '\'' +
-                ", delivery_place='" + delivery_place + '\'' +
-                ", is_in_batches=" + is_in_batches +
-                ", delivery_date=" + delivery_date +
+                ", orderUnit='" + orderUnit + '\'' +
+                ", deliveryMethod='" + deliveryMethod + '\'' +
+                ", deliveryState='" + deliveryState + '\'' +
+                ", deliveryPlace='" + deliveryPlace + '\'' +
+                ", isInBatches=" + isInBatches +
+                ", deliveryDate=" + deliveryDate +
                 ", remark='" + remark + '\'' +
-                ", compiling_person=" + compiling_person +
-                ", submit_time=" + submit_time +
+                ", compilingPerson=" + compilingPerson +
+                ", submitTime=" + submitTime +
                 ", auditor=" + auditor +
-                ", audit_time=" + audit_time +
-                ", audit_remark='" + audit_remark + '\'' +
+                ", auditTime=" + auditTime +
+                ", auditRemark='" + auditRemark + '\'' +
                 ", approver=" + approver +
-                ", approve_time=" + approve_time +
-                ", approve_remark='" + approve_remark + '\'' +
+                ", approveTime=" + approveTime +
+                ", approveRemark='" + approveRemark + '\'' +
                 '}';
     }
 }

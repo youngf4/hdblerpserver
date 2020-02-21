@@ -6,16 +6,15 @@ public class ProcessVersion {
     // TODO 用于存放工艺工时的bean
 
     private int id;
-    private Date creat_time;
-    private Date update_time;
+    private Date creatTime;
+    private Date updateTime;
     private int updater;
     private int type;
-    private int product_id;
-    private String  drawing_number;
-    private String version_number;
-    private int version_state;
+    private int productId;
+    private String  drawingNumber;
+    private String versionNumber;
+    private int versionState;
 //    private List<Process> process;//派工单执行工序列表
-
 
     public int getId() {
         return id;
@@ -25,20 +24,20 @@ public class ProcessVersion {
         this.id = id;
     }
 
-    public Date getCreat_time() {
-        return creat_time;
+    public Date getCreatTime() {
+        return creatTime;
     }
 
-    public void setCreat_time(Date creat_time) {
-        this.creat_time = creat_time;
+    public void setCreatTime(Date creatTime) {
+        this.creatTime = creatTime;
     }
 
-    public Date getUpdate_time() {
-        return update_time;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdate_time(Date update_time) {
-        this.update_time = update_time;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public int getUpdater() {
@@ -57,50 +56,50 @@ public class ProcessVersion {
         this.type = type;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public String getDrawing_number() {
-        return drawing_number;
+    public String getDrawingNumber() {
+        return drawingNumber;
     }
 
-    public void setDrawing_number(String drawing_number) {
-        this.drawing_number = drawing_number;
+    public void setDrawingNumber(String drawingNumber) {
+        this.drawingNumber = drawingNumber;
     }
 
-    public String getVersion_number() {
-        return version_number;
+    public String getVersionNumber() {
+        return versionNumber;
     }
 
-    public void setVersion_number(String version_number) {
-        this.version_number = version_number;
+    public void setVersionNumber(String versionNumber) {
+        this.versionNumber = versionNumber;
     }
 
-    public int getVersion_state() {
-        return version_state;
+    public int getVersionState() {
+        return versionState;
     }
 
-    public void setVersion_state(int version_state) {
-        this.version_state = version_state;
+    public void setVersionState(int versionState) {
+        this.versionState = versionState;
     }
 
     @Override
     public String toString() {
         return "ProcessVersion{" +
                 "id=" + id +
-                ", creat_time=" + creat_time +
-                ", update_time=" + update_time +
+                ", creatTime=" + creatTime +
+                ", updateTime=" + updateTime +
                 ", updater=" + updater +
                 ", type=" + type +
-                ", product_id=" + product_id +
-                ", drawing_number='" + drawing_number + '\'' +
-                ", version_number='" + version_number + '\'' +
-                ", version_state=" + version_state +
+                ", productId=" + productId +
+                ", drawingNumber='" + drawingNumber + '\'' +
+                ", versionNumber='" + versionNumber + '\'' +
+                ", versionState=" + versionState +
                 '}';
     }
 }

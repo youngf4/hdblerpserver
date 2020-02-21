@@ -2,17 +2,16 @@ package com.hdbl.erp.entity;
 
 import java.util.Date;
 
-public class UserBean {
+public class EquipmentBean {
+    //设备信息表
 
-    private int  id;
+    private int id;
     private Date creatTime;
     private Date updateTime;
-    private String username;
-    private String password;
+    private String number; //设备编号
     private String name;
-    private String phoneNumber;
-    private int  state;
-    private String openid;
+    private int planHour; //应动工时
+    private int state;
 
     public int getId() {
         return id;
@@ -38,20 +37,12 @@ public class UserBean {
         this.updateTime = updateTime;
     }
 
-    public String getUsername() {
-        return username;
+    public String getNumber() {
+        return number;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getName() {
@@ -62,12 +53,12 @@ public class UserBean {
         this.name = name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public int getPlanHour() {
+        return planHour;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPlanHour(int planHour) {
+        this.planHour = planHour;
     }
 
     public int getState() {
@@ -78,26 +69,16 @@ public class UserBean {
         this.state = state;
     }
 
-    public String getOpenid() {
-        return openid;
-    }
-
-    public void setOpenid(String openid) {
-        this.openid = openid;
-    }
-
     @Override
     public String toString() {
-        return "UserBean{" +
+        return "EquipmentBean{" +
                 "id=" + id +
                 ", creatTime=" + creatTime +
                 ", updateTime=" + updateTime +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", number='" + number + '\'' +
                 ", name='" + name + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
+                ", planHour=" + planHour +
                 ", state=" + state +
-                ", openid='" + openid + '\'' +
                 '}';
     }
 }
