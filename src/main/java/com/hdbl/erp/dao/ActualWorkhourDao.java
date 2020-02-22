@@ -12,11 +12,10 @@ public interface ActualWorkhourDao {
     /**
      * 查询执行工序下某一状态的实动工时记录
      * @param processId ：执行工序ID
-     * @param state ：状态码
+     * @param state ：状态码，可以为null，则按工序查询
      * @return ：实动工时记录列表
      */
-    List<ActualWorkhour> getRecordByProcess(int processId , int state);
-    List<ActualWorkhour> getRecordByProcess(int processId);
+    List<ActualWorkhour> getRecordByProcess(Integer processId , Integer state);
 
 
     /**
@@ -34,7 +33,7 @@ public interface ActualWorkhourDao {
      * @param records ：实动工时列表
      * @return ：成功匹配数据库记录条数，失败返回exception，需要上级处理
      */
-    int putRecords(List<ActualWorkhour> records);
+    int insertRecords(List<ActualWorkhour> records);
 
 
     /**

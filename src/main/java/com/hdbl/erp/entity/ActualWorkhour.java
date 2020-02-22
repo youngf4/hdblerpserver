@@ -14,6 +14,14 @@ public class ActualWorkhour {
     private Date endTime;
     private int equipmentId; //设备ID
 
+    public ActualWorkhour(int state, int executionId, Date beginTime, Date endTime, int equipmentId) {
+        this.state = state;
+        this.executionId = executionId;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+        this.equipmentId = equipmentId;
+    }
+
     public int getId() {
         return id;
     }

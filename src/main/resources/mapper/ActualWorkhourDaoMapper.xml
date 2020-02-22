@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdbl.erp.dao.ActualWorkhourDao">
+    <!-- 根据实动工时查询-->
+    <select id="getRecordByProcess" resultType="com.hdbl.erp.entity.ActualWorkhour" parameterType="java.lang.Integer" >
+        select  *
+        from test
+        where process_id = #{processId}
+        <if test="state!=null"> state = #{state}</if>
+    </select>
+
+    <!--插入记录列表-->
+    <insert id="insertRecords" parameterType="com.hdbl.erp.entity.ActualWorkhour">
+        insert into tb_actual_workhour(state, execution_id, begin_time, end_time, equipment_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.state}, #{item.executionId}, #{item.beginTime}, #{item.endTime}, #{item.equipmentId})
+        </foreach>
+    </insert>
+</mapper>
