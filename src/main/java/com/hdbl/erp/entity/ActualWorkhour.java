@@ -9,10 +9,10 @@ public class ActualWorkhour {
     private Date creatTime;
     private Date updateTime;
     private int state;
-    private int executionId;
+    private int executionId; //执行工序ID
     private Date beginTime;
     private Date endTime;
-    private int equipmentId;
+    private int equipmentId; //设备ID
 
     public int getId() {
         return id;
@@ -80,7 +80,7 @@ public class ActualWorkhour {
 
     @Override
     public String toString() {
-        return "ActualWorkhour{" +
+        return "ActualWorkhourDao{" +
                 "id=" + id +
                 ", creatTime=" + creatTime +
                 ", updateTime=" + updateTime +
