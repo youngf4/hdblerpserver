@@ -1,10 +1,13 @@
 package com.hdbl.erp.sevice;
 
 import com.hdbl.erp.entity.UserBean;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+@Service
 public class UserService{
     public static int SUCCESS=1,FILED=0;
     public UserBean vertify(String account, String password){
