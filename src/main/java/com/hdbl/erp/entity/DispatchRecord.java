@@ -7,14 +7,19 @@ public class DispatchRecord {
     private int id;
     private Date creatTime;
     private Date updateTime;
-    private int updater;
+    private int createrId;
     private int state;
     private String sheetNumber;
     private int productId;
     private int number;
     private String remark;
-//    private List<Process> processes;//派工单工序表
 
+    public DispatchRecord(int createrId, String sheetNumber, int productId, int number) {
+        this.createrId = createrId;
+        this.sheetNumber = sheetNumber;
+        this.productId = productId;
+        this.number = number;
+    }
 
     public int getId() {
         return id;
@@ -40,12 +45,12 @@ public class DispatchRecord {
         this.updateTime = updateTime;
     }
 
-    public int getUpdater() {
-        return updater;
+    public int getCreaterId() {
+        return createrId;
     }
 
-    public void setUpdater(int updater) {
-        this.updater = updater;
+    public void setCreaterId(int createrId) {
+        this.createrId = createrId;
     }
 
     public int getState() {
@@ -94,11 +99,11 @@ public class DispatchRecord {
                 "id=" + id +
                 ", creatTime=" + creatTime +
                 ", updateTime=" + updateTime +
-                ", updater=" + updater +
+                ", createrId=" + createrId +
                 ", state=" + state +
                 ", sheetNumber='" + sheetNumber + '\'' +
                 ", productId=" + productId +
-                ", number=" + number +
+                ", number" + number +
                 ", remark='" + remark + '\'' +
                 '}';
     }

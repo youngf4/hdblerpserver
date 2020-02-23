@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdbl.erp.dao.DispatchRecordDao">
+
+    <!-- 广义覆盖查询 -->
+    <!--<select id="getRecords" resultType="com.hdbl.erp.entity.DispatchRecord"  parameterType="java.lang.Integer">-->
+    <select id="getRecords" resultMap="testPOJO" >
+        select * from tb_dispatch_record
+        <where>
+            <if test="obj.id"> id = #{ obj.id }</if>
+            <if test="obj.creatTime">and creat_time = #{ obj.creatTime }</if>
+            <if test="obj.updateTime != null">and update_time = #{ obj.updateTime }</if>
+            <if test="obj.createrId">and creater_id = #{ obj.createrId }</if>
+            <if test="obj.state">and state = #{ obj.state }</if>
+            <if test="obj.sheetNumber">and sheet_number = #{ obj.sheetNumber }</if>
+            <if test="obj.productId">and product_id = #{ obj.productId }</if>
+            <if test="obj.number">and number = #{ obj.number }</if>
+            <if test="obj.remark">and remark = #{ obj.remark }</if>
+            <if test="obj.startTime and obj.finishTime"> and creat_time &gt; #{obj.startTime} and creat_time &lt; #{obj.finishTime}</if>
+        </where>
+        <if test="obj.page and obj.pageSize"> limit #{ obj.page } , #{ obj.pageSize }</if>
+    </select>
+    <resultMap id="testPOJO" type="java.util.HashMap">
+        <id property="id" column="id"></id>
+        <result property="creatTime" column="creat_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="createrId" column="creater_id" />
+        <result property="state" column="state" />
+        <result property="sheetNumber" column="sheet_number" />
+        <result property="productId" column="product_id" />
+        <result property="number" column="number" />
+        <result property="remark" column="remark" />
+    </resultMap>
+    <!-- 批量插入 -->
+    <insert id="insertRecords" parameterType="com.hdbl.erp.entity.DispatchRecord">
+        insert into tb_dispatch_record( creater_id, sheet_number, product_id, number, state, remark )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.createrId}, #{item.sheetNumber}, #{item.productId}, #{item.number}
+            <choose>
+                <when test="item.state">, #{ item.state} </when>
+                <otherwise> , 1 </otherwise>
+            </choose>
+            <choose>
+                <when test="item.remark"> , #{ item.remark }</when>
+                <otherwise> , "" </otherwise>
+            </choose>
+            )
+        </foreach>
+    </insert>
+
+    <!-- 广义覆盖修改 -->
+    <update id="updateRecords">
+        update tb_dispatch_record
+        <trim prefix="set" prefixOverrides="and">
+            <if test="valueMap.state">and state = #{ valueMap.state }</if>
+            <if test="valueMap.sheetNumber">and sheet_number = #{ valueMap.sheetNumber }</if>
+            <if test="valueMap.productId">and product_id = #{ valueMap.productId }</if>
+            <if test="valueMap.number">and number = #{ valueMap.number }</if>
+            <if test="valueMap.remark">and remark = #{ valueMap.remark }</if>
+        </trim>
+        <where>
+            <if test="location.id"> id = #{ location.id }</if>
+            <if test="location.creatTime">and creat_time = #{ location.creatTime }</if>
+            <if test="location.updateTime">and update_time = #{ location.updateTime }</if>
+            <if test="location.createrId">and creater_id = #{ location.createrId }</if>
+            <if test="location.state">and state = #{ location.state }</if>
+            <if test="location.sheetNumber">and sheet_number = #{ location.sheetNumber }</if>
+            <if test="location.productId">and product_id = #{ location.productId }</if>
+            <if test="location.number">and number = #{ location.number }</if>
+            <if test="location.remark">and remark = #{ location.remark }</if>
+            <if test="location.startTime and location.finishTime"> and creat_time &gt; #{location.startTime} and creat_time &lt; #{location.finishTime}</if>
+        </where>
+    </update>
+
+    <!-- 广义覆盖删除 -->
+    <delete id="deleteRecords">
+        delete from tb_dispatch_record
+        <where>
+            <if test="obj.id"> id = #{ obj.id }</if>
+            <if test="obj.creatTime">and creat_time = #{ obj.creatTime }</if>
+            <if test="obj.updateTime">and update_time = #{ obj.updateTime }</if>
+            <if test="obj.createrId">and creater_id = #{ obj.createrId }</if>
+            <if test="obj.state">and state = #{ obj.state }</if>
+            <if test="obj.sheetNumber">and sheet_number = #{ obj.sheetNumber }</if>
+            <if test="obj.productId">and product_id = #{ obj.productId }</if>
+            <if test="obj.number">and number = #{ obj.number }</if>
+            <if test="obj.remark">and remark = #{ obj.remark }</if>
+            <if test="obj.startTime and obj.finishTime"> and creat_time &gt; #{obj.startTime} and creat_time &lt; #{obj.finishTime}</if>
+        </where>
+    </delete>
+</mapper>

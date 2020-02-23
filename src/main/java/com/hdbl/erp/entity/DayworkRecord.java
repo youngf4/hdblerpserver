@@ -17,6 +17,13 @@ public class DayworkRecord {
     private int state;
     private int auditorId;
 
+    public DayworkRecord(int workerId, Date beginTime, Date endTime, String remark) {
+        this.workerId = workerId;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+        this.remark = remark;
+    }
+
     public int getId() {
         return id;
     }
