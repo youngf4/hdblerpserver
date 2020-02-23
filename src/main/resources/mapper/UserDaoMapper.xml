@@ -12,21 +12,55 @@
         private int  state;
         private String openid; -->
         <!-- 广义查询-->
-    <select id="select" resultType="java.util.ArrayList" parameterType="java.util.HashMap">
+    <select id="select" resultType="com.hdbl.erp.entity.UserBean" parameterType="java.util.HashMap">
         select * from tb_user
         <where>
-          <if test="obj.id">
+          <if test="obj.id!=null">
             id = #{obj.id}
           </if>
-          <if test="obj.username">
+          <if test="obj.username!=null">
             and username=#{obj.username}
           </if>
-          <if test="obj.password">
+          <if test="obj.password!=null">
               and password = #{obj.password}
           </if>
-          <if test="obj.phoneNumber">
+          <if test="obj.phoneNumber!=null">
               and phone_number = #{obj.phoneNumber}
           </if>
         </where>
     </select>
+    <insert id="insert" parameterType="com.hdbl.erp.entity.UserBean">
+        insert into tb_user(creat_time,update_time,username,password,name,phone_number,state,openid)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.creatTime},
+            #{item.updateTime},
+            #{item.username},
+            #{item.password},
+            #{item.name},
+            #{item.phoneNumber},
+            #{item.state},
+            #{item.openid}
+            )
+        </foreach>
+
+    </insert>
+    <delete id="delete" parameterType="com.hdbl.erp.entity.UserBean" >
+        delete from tb_user
+        <where>
+            <if test="obj.id!=null">
+                id = #{obj.id}
+            </if>
+            <if test="obj.username!=null">
+                and username=#{obj.username}
+            </if>
+            <if test="obj.password!=null">
+                and password = #{obj.password}
+            </if>
+            <if test="obj.phoneNumber!=null">
+                and phone_number = #{obj.phoneNumber}
+            </if>
+        </where>
+    </delete>
+
 </mapper>
