@@ -21,11 +21,4 @@ public class TestController {
         return testService.getById(id);
     }
 
-    @RequestMapping(value = "/actualworkhour/test",method = RequestMethod.GET)
-    public String testa(){
-        Integer result = testService.insertList();
-        System.out.println("result:" + result);
-        return result.toString();
-    }
-
 }

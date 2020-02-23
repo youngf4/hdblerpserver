@@ -1,20 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hdbl.erp.dao.ActualWorkhourDao">
-    <!-- 根据实动工时查询-->
-    <select id="getRecordByProcess" resultType="com.hdbl.erp.entity.ActualWorkhour" parameterType="java.lang.Integer" >
-        select  *
-        from test
-        where process_id = #{processId}
-        <if test="state!=null"> state = #{state}</if>
+    <!-- 广义覆盖查询-->
+    <select id="getRecords" resultType="com.hdbl.erp.entity.ActualWorkhour" parameterType="java.lang.Integer" >
+        select * from tb_actual_workhour
+        <where>
+            <if test="obj.id"> id = #{obj.id}</if>
+            <if test="obj.creatTime"> and  creat_time= #{obj.creatTime}</if>
+            <if test="obj.updateTime"> and  update_time= #{obj.updateTime}</if>
+            <if test="obj.state"> and state = #{obj.state}</if>
+            <if test="obj.executionId"> and execution_id = #{obj.executionId}</if>
+            <if test="obj.beginTime"> and begin_time = #{obj.beginTime}</if>
+            <if test="obj.endTime"> and  end_time= #{obj.endTime}</if>
+            <if test="obj.equipmentId"> and equipment_id = #{obj.equipmentId}</if>
+            <if test="obj.startTime and obj.finishTime"> and creat_time &gt; #{obj.startTime} and creat_time &lt; #{obj.finishTime}</if>
+        </where>
+        <if test="obj.page and obj.pageSize"> limit #{obj.page}, #{obj.pageSize}</if>
     </select>
 
     <!--插入记录列表-->
     <insert id="insertRecords" parameterType="com.hdbl.erp.entity.ActualWorkhour">
-        insert into tb_actual_workhour(state, execution_id, begin_time, end_time, equipment_id)
+        insert into tb_actual_workhour(execution_id, begin_time, end_time, equipment_id, state)
         values
         <foreach collection="list" item="item" index="index" separator=",">
-            ( #{item.state}, #{item.executionId}, #{item.beginTime}, #{item.endTime}, #{item.equipmentId})
+            ( #{item.executionId}, #{item.beginTime}, #{item.endTime}, #{item.equipmentId}
+            <choose>
+                <when test="item.state">, #{item.state}</when>
+                <otherwise>, 1</otherwise>
+            </choose>
+            )
         </foreach>
     </insert>
+
+    <!--修改记录-->
+    <update id="updateRecords">
+        update tb_actual_workhour
+        <trim prefix="set" prefixOverrides="and">
+            <if test="valueMap.state"> and state = #{valueMap.state}</if>
+            <if test="valueMap.executionId"> and execution_id = #{valueMap.executionId}</if>
+            <if test="valueMap.beginTime"> and begin_time = #{valueMap.beginTime}</if>
+            <if test="valueMap.endTime"> and  end_time= #{valueMap.endTime}</if>
+            <if test="valueMap.equipmentId"> and equipment_id = #{valueMap.equipmentId}</if>
+        </trim>
+        <where>
+            <if test="location.id"> id = #{location.id}</if>
+            <if test="location.creatTime"> and  creat_time= #{location.creatTime}</if>
+            <if test="location.updateTime"> and  update_time= #{location.updateTime}</if>
+            <if test="location.state"> and state = #{location.state}</if>
+            <if test="location.executionId"> and execution_id = #{location.executionId}</if>
+            <if test="location.beginTime"> and begin_time = #{location.beginTime}</if>
+            <if test="location.endTime"> and  end_time= #{location.endTime}</if>
+            <if test="location.equipmentId"> and equipment_id = #{location.equipmentId}</if>
+            <if test="location.startTime and obj.finishTime"> and creat_time &gt; #{location.startTime} and creat_time &lt; #{location.finishTime}</if>
+        </where>
+    </update>
+
+    <!--删除记录-->
+    <delete id="deleteRecords">
+        delete from tb_actual_workhour
+        <where>
+            <if test="obj.id"> id = #{obj.id}</if>
+            <if test="obj.creatTime"> and  creat_time= #{obj.creatTime}</if>
+            <if test="obj.updateTime"> and  update_time= #{obj.updateTime}</if>
+            <if test="obj.state"> and state = #{obj.state}</if>
+            <if test="obj.executionId"> and execution_id = #{obj.executionId}</if>
+            <if test="obj.beginTime"> and begin_time = #{obj.beginTime}</if>
+            <if test="obj.endTime"> and  end_time= #{obj.endTime}</if>
+            <if test="obj.equipmentId"> and equipment_id = #{obj.equipmentId}</if>
+            <if test="obj.startTime and obj.finishTime"> and creat_time &gt; #{obj.startTime} and creat_time &lt; #{obj.finishTime}</if>
+        </where>
+    </delete>
 </mapper>
