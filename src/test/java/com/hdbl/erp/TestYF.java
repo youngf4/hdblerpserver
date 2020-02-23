@@ -165,13 +165,13 @@ public class TestYF {
     @Test
     void testInsertOnDispatchRecordDao(){
         ArrayList<DispatchRecord> list = new ArrayList<DispatchRecord>();
-        list.add(new DispatchRecord(0100,"20001",1,10));
-        list.add(new DispatchRecord(0100,"20002",5,10));
-        list.add(new DispatchRecord(0100,"20003",1,120));
-        list.add(new DispatchRecord(0100,"20004",2,100));
-        list.add(new DispatchRecord(0200,"20005",1,100));
-        list.add(new DispatchRecord(0200,"20006",2,120));
-        list.add(new DispatchRecord(0200,"20007",1,10));
+//        list.add(new DispatchRecord(0100,"20001",1,10));
+//        list.add(new DispatchRecord(0100,"20002",5,10));
+//        list.add(new DispatchRecord(0100,"20003",1,120));
+//        list.add(new DispatchRecord(0100,"20004",2,100));
+//        list.add(new DispatchRecord(0200,"20005",1,100));
+//        list.add(new DispatchRecord(0200,"20006",2,120));
+//        list.add(new DispatchRecord(0200,"20007",1,10));
         int result = dispatchRecordDao.insertRecords(list);
         System.out.println(result);
     }
