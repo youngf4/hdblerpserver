@@ -37,5 +37,6 @@ public class HQTest {
         List<UserBean> list = new ArrayList<>();
         list.add(userBean);
         System.out.println(list.get(0).getCreatTime());
+        userDao.insert(list);
     }
 }

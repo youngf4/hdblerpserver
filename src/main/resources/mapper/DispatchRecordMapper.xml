@@ -4,7 +4,7 @@
 
     <!-- 广义覆盖查询 -->
     <!--<select id="getRecords" resultType="com.hdbl.erp.entity.DispatchRecord"  parameterType="java.lang.Integer">-->
-    <select id="getRecords" resultMap="testPOJO" >
+    <select id="getRecords" resultType="com.hdbl.erp.entity.DispatchRecord">
         select * from tb_dispatch_record
         <where>
             <if test="obj.id"> id = #{ obj.id }</if>
@@ -20,10 +20,10 @@
         </where>
         <if test="obj.page and obj.pageSize"> limit #{ obj.page } , #{ obj.pageSize }</if>
     </select>
-    <resultMap id="testPOJO" type="java.util.HashMap">
+    <resultMap id="testPOJO" type="com.hdbl.erp.entity.DispatchRecord">
         <id property="id" column="id"></id>
         <result property="creatTime" column="creat_time" />
-        <result property="updateTime" column="update_time" />
+        <result property="updateTime" javaType="java.util.Date" column="update_time" />
         <result property="createrId" column="creater_id" />
         <result property="state" column="state" />
         <result property="sheetNumber" column="sheet_number" />

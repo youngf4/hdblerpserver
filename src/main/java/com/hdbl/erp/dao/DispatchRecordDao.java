@@ -4,6 +4,7 @@ import com.hdbl.erp.entity.DispatchRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface DispatchRecordDao {
      * @return
      */
 //    List<DispatchRecord> getRecords(@Param("obj") HashMap<String, Object> obj);
-    HashMap getRecords(@Param("obj") HashMap<String, Object> obj);
+    List<Object> getRecords(@Param("obj") HashMap<String, Object> obj);
 
 
     /**

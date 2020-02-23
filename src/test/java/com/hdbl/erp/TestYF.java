@@ -152,8 +152,8 @@ public class TestYF {
         HashMap<String,Object> map = new HashMap<>();
         map.put( "id" , 2);
 
-        HashMap result =  dispatchRecordDao.getRecords(map);
-        System.out.println(result.get("updateTime") instanceof Date);
+        List result =  dispatchRecordDao.getRecords(map);
+//        System.out.println(result.get("updateTime") instanceof Date);
         System.out.println(result);
 
 //        List<DispatchRecord> list =  dispatchRecordDao.getRecords(map);
