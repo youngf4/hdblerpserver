@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdbl.erp.dao.PriceDao">
+
+   <!-- 广义覆盖查询 -->
+    <select id="getPrices" resultType="com.hdbl.erp.entity.PriceBean">
+        select * from tb_price
+        <where>
+            <if test="obj.id"> id = #{ obj.id }</if>
+            <if test="obj.workType"> and work_type = #{ obj.workType }</if>
+            <if test="obj.price"> and price = #{ obj.price }</if>
+        </where>
+    </select>
+
+    <!-- 批量插入设备记录 -->
+    <insert id="insertPrices">
+        insert into tb_price( work_type,  price)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.workType}, #{item.price})
+        </foreach>
+    </insert>
+
+    <!-- 广义覆盖修改 -->
+    <update id="updatePrices">
+        update tb_price
+        <trim prefix="set" prefixOverrides="and">
+            <if test="valueMap.workType"> and work_type = #{ valueMap.workType }</if>
+            <if test="valueMap.price"> and price = #{ valueMap.price }</if>
+        </trim>
+        <where>
+            <if test="location.id"> id = #{ location.id }</if>
+            <if test="location.workType"> and work_type = #{ location.workType }</if>
+            <if test="location.price"> and price = #{ location.price }</if>
+        </where>
+    </update>
+
+    <!-- 广义覆盖删除 -->
+    <delete id="deletePrices">
+        delete from tb_price
+        <where>
+            <if test="obj.id"> id = #{ obj.id }</if>
+            <if test="obj.workType"> and work_type = #{ obj.workType }</if>
+            <if test="obj.price"> and price = #{ obj.price }</if>
+        </where>
+    </delete>
+</mapper>

@@ -6,8 +6,16 @@ public class PriceBean {
     //工时单价类
 
     private int id;
-    private String work_type; //工时类型
+    private String workType; //工时类型
     private BigDecimal price; //工时单价
+
+    public PriceBean() {
+    }
+
+    public PriceBean(String workType, BigDecimal price) {
+        this.workType = workType;
+        this.price = price;
+    }
 
     public int getId() {
         return id;
@@ -17,12 +25,12 @@ public class PriceBean {
         this.id = id;
     }
 
-    public String getWork_type() {
-        return work_type;
+    public String getWorkType() {
+        return workType;
     }
 
-    public void setWork_type(String work_type) {
-        this.work_type = work_type;
+    public void setWorkType(String workType) {
+        this.workType = workType;
     }
 
     public BigDecimal getPrice() {
@@ -37,7 +45,7 @@ public class PriceBean {
     public String toString() {
         return "PriceBean{" +
                 "id=" + id +
-                ", work_type='" + work_type + '\'' +
+                ", workType='" + workType + '\'' +
                 ", price=" + price +
                 '}';
     }

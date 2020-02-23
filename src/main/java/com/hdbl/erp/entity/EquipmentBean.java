@@ -13,6 +13,19 @@ public class EquipmentBean {
     private int planHour; //应动工时
     private int state;
 
+    public EquipmentBean(){}
+
+    public EquipmentBean(String number, String name) {
+        this.number = number;
+        this.name = name;
+    }
+
+    public EquipmentBean(String number, String name, int planHour) {
+        this.number = number;
+        this.name = name;
+        this.planHour = planHour;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdbl.erp.dao.EquipmentDao">
+
+   <!-- 广义覆盖查询 -->
+    <select id="getEquipments" resultType="com.hdbl.erp.entity.EquipmentBean">
+        select * from tb_equipment
+        <where>
+            <if test="obj.id"> id = #{ obj.id }</if>
+            <if test="obj.creatTime"> and creat_time = #{ obj.creatTime }</if>
+            <if test="obj.updateTime"> and update_time = #{ obj.updateTime }</if>
+            <if test="obj.number"> and number = #{ obj.number }</if>
+            <if test="obj.name"> and name = #{ obj.name }</if>
+            <if test="obj.planHour"> and plan_hour = #{ obj.planHour }</if>
+            <if test="obj.state"> and state = #{ obj.state }</if>
+        </where>
+    </select>
+
+    <!-- 批量插入设备记录 -->
+    <insert id="insertEquipments">
+        insert into tb_equipment( number, name, plan_hour, state)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.number}, #{item.name}
+            <choose>
+                <when test="item.planHour"> , #{ item.planHour } </when>
+                <otherwise> , 1 </otherwise>
+            </choose>
+            <choose>
+                <when test="item.state"> , #{ item.state } </when>
+                <otherwise> , 1 </otherwise>
+            </choose>
+            )
+        </foreach>
+    </insert>
+
+    <!-- 广义覆盖修改 -->
+    <update id="updateEquipments">
+        update tb_equipment
+        <trim prefix="set" prefixOverrides="and">
+            <if test="valueMap.number"> and number = #{ valueMap.number }</if>
+            <if test="valueMap.name"> and name = #{ valueMap.name }</if>
+            <if test="valueMap.planHour"> and planHour = #{ valueMap.planHour }</if>
+            <if test="valueMap.state"> and state = #{ valueMap.state }</if>
+        </trim>
+        <where>
+            <if test="location.id"> id = #{ location.id }</if>
+            <if test="location.creatTime"> and creat_time = #{ location.creatTime }</if>
+            <if test="location.updateTime"> and update_time = #{ location.updateTime }</if>
+            <if test="location.number"> and number = #{ location.number }</if>
+            <if test="location.name"> and name = #{ location.name }</if>
+            <if test="location.planHour"> and plan_hour = #{ location.planHour }</if>
+            <if test="location.state"> and state = #{ location.state }</if>
+        </where>
+    </update>
+
+    <!-- 广义覆盖删除 -->
+    <delete id="deleteEquipments">
+        delete from tb_equipment
+        <where>
+            <if test="obj.id"> id = #{ obj.id }</if>
+            <if test="obj.creatTime"> and creat_time = #{ obj.creatTime }</if>
+            <if test="obj.updateTime"> and update_time = #{ obj.updateTime }</if>
+            <if test="obj.number"> and number = #{ obj.number }</if>
+            <if test="obj.name"> and name = #{ obj.name }</if>
+            <if test="obj.planHour"> and plan_hour = #{ obj.planHour }</if>
+            <if test="obj.state"> and state = #{ obj.state }</if>
+        </where>
+    </delete>
+</mapper>

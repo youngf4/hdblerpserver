@@ -4,7 +4,14 @@ public class ProcessBean {
     //工序类
 
     private int id;  //工序编号
-    private int name; //工序名称
+    private String name; //工序名称
+
+    public ProcessBean() {
+    }
+
+    public ProcessBean(String name) {
+        this.name = name;
+    }
 
     public int getId() {
         return id;
@@ -14,11 +21,11 @@ public class ProcessBean {
         this.id = id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 

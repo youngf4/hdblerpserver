@@ -6,6 +6,12 @@ public class PermissionBean {
     private int id; //权限编号
     private String name; //权限名
 
+    public PermissionBean() {}
+
+    public PermissionBean(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
