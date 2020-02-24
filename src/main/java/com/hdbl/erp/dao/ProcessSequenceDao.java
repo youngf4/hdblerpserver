@@ -11,5 +11,5 @@ public interface ProcessSequenceDao {
     public ArrayList<ProcessSequence> select(@Param("args") HashMap<String,Object> args);
     public int update(@Param("condition") HashMap<String,Object> condition, @Param("data")HashMap<String,Object> data);
     public int insert(List<ProcessSequence> list);
-    public int delete(@Param("obj")HashMap<String,Object> ob
+    public int delete(@Param("obj")HashMap<String,Object> obj);
 }
