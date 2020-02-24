@@ -28,6 +28,7 @@
               and phone_number = #{obj.phoneNumber}
           </if>
         </where>
+        <if test="obj.page and obj.pageSize"> limit #{obj.page}, #{obj.pageSize}</if>
     </select>
     <insert id="insert" parameterType="com.hdbl.erp.entity.UserBean">
         insert into tb_user(creat_time,update_time,username,password,name,phone_number,state,openid)

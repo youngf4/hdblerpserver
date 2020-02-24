@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdbl.erp.dao.ProductProducingDao">
+    <select id="select">
+        select * from tb_product_producing
+        <where>
+            <if test="obj.id">and id = #{obj.id}</if>
+            <if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>
+            <if test="obj.updateTime">and update_time = #{obj.updateTime}</if>
+            <if test="obj.type">and type = #{obj.type}</if>
+            <if test="obj.state">and state = #{obj.state}</if>
+            <if test="obj.noticeId">and notice_id = #{obj.noticeId}</if>
+            <if test="obj.noticeNumber">and notice_number = #{obj.noticeNumber}</if>
+            <if test="obj.processVersionId">and process_version_id = #{obj.processVersionId}</if>
+            <if test="obj.processVersionNumber">and process_version_number = #{obj.processVersionNumber}</if>
+            <if test="obj.executionId">and execution_id = #{obj.executionId}</if>
+            <if test="obj.orderNumber">and order_number = #{obj.orderNumber}</if>
+            <if test="obj.drawingNumber">and drawing_number = #{obj.drawingNumber}</if>
+            <if test="obj.productName">and product_name = #{obj.productName}</if>
+            <if test="obj.materialQuality">and material_quality = #{obj.materialQuality}</if>
+            <if test="obj.">and  = #{obj.}</if>
+            <if test="obj.deliveryDate">and delivery_date = #{obj.deliveryDate}</if>
+            <if test="obj.remark">and remark = #{obj.remark}</if>
+        </where>
+        <if test="obj.page and obj.pageSize">limit #{obj.page}, #{obj.pageSize}</if>
+    </select>
+    <update id="update">
+        update tb_product_producing
+        <trim prefix="set" prefixOverrides="and">
+            <if test="data.id">and id = #{data.id}</if>
+            <if test="data.creatTime">and creat_time = #{data.creatTime}</if>
+            <if test="data.updateTime">and update_time = #{data.updateTime}</if>
+            <if test="data.type">and type = #{data.type}</if>
+            <if test="data.state">and state = #{data.state}</if>
+            <if test="data.noticeId">and notice_id = #{data.noticeId}</if>
+            <if test="data.noticeNumber">and notice_number = #{data.noticeNumber}</if>
+            <if test="data.processVersionId">and process_version_id = #{data.processVersionId}</if>
+            <if test="data.processVersionNumber">and process_version_number = #{data.processVersionNumber}</if>
+            <if test="data.executionId">and execution_id = #{data.executionId}</if>
+            <if test="data.orderNumber">and order_number = #{data.orderNumber}</if>
+            <if test="data.drawingNumber">and drawing_number = #{data.drawingNumber}</if>
+            <if test="data.productName">and product_name = #{data.productName}</if>
+            <if test="data.materialQuality">and material_quality = #{data.materialQuality}</if>
+            <if test="data.">and  = #{data.}</if>
+            <if test="data.deliveryDate">and delivery_date = #{data.deliveryDate}</if>
+            <if test="data.remark">and remark = #{data.remark}</if>
+        </trim>
+        <where>
+            <if test="condition.id">and id = #{condition.id}</if>
+            <if test="condition.creatTime">and creat_time = #{condition.creatTime}</if>
+            <if test="condition.updateTime">and update_time = #{condition.updateTime}</if>
+            <if test="condition.type">and type = #{condition.type}</if>
+            <if test="condition.state">and state = #{condition.state}</if>
+            <if test="condition.noticeId">and notice_id = #{condition.noticeId}</if>
+            <if test="condition.noticeNumber">and notice_number = #{condition.noticeNumber}</if>
+            <if test="condition.processVersionId">and process_version_id = #{condition.processVersionId}</if>
+            <if test="condition.processVersionNumber">and process_version_number = #{condition.processVersionNumber}</if>
+            <if test="condition.executionId">and execution_id = #{condition.executionId}</if>
+            <if test="condition.orderNumber">and order_number = #{condition.orderNumber}</if>
+            <if test="condition.drawingNumber">and drawing_number = #{condition.drawingNumber}</if>
+            <if test="condition.productName">and product_name = #{condition.productName}</if>
+            <if test="condition.materialQuality">and material_quality = #{condition.materialQuality}</if>
+            <if test="condition.">and  = #{condition.}</if>
+            <if test="condition.deliveryDate">and delivery_date = #{condition.deliveryDate}</if>
+            <if test="condition.remark">and remark = #{condition.remark}</if>
+        </where>
+    </update>
+    <delete id="delete">
+        delete from tb_product_producing
+        <where>
+            <if test="obj.id">and id = #{obj.id}</if>
+            <if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>
+            <if test="obj.updateTime">and update_time = #{obj.updateTime}</if>
+            <if test="obj.type">and type = #{obj.type}</if>
+            <if test="obj.state">and state = #{obj.state}</if>
+            <if test="obj.noticeId">and notice_id = #{obj.noticeId}</if>
+            <if test="obj.noticeNumber">and notice_number = #{obj.noticeNumber}</if>
+            <if test="obj.processVersionId">and process_version_id = #{obj.processVersionId}</if>
+            <if test="obj.processVersionNumber">and process_version_number = #{obj.processVersionNumber}</if>
+            <if test="obj.executionId">and execution_id = #{obj.executionId}</if>
+            <if test="obj.orderNumber">and order_number = #{obj.orderNumber}</if>
+            <if test="obj.drawingNumber">and drawing_number = #{obj.drawingNumber}</if>
+            <if test="obj.productName">and product_name = #{obj.productName}</if>
+            <if test="obj.materialQuality">and material_quality = #{obj.materialQuality}</if>
+            <if test="obj.">and  = #{obj.}</if>
+            <if test="obj.deliveryDate">and delivery_date = #{obj.deliveryDate}</if>
+            <if test="obj.remark">and remark = #{obj.remark}</if>
+        </where>
+    </delete>
+    <insert id="insert">
+        insert into tb_product_producing(type,state,notice_id,notice_number,process_version_id,process_version_number,execution_id,order_number,drawing_number,product_name,material_quality,,delivery_date,remark,)
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.type},#{item.state},#{item.noticeId},#{item.noticeNumber},#{item.processVersionId},#{item.processVersionNumber},#{item.executionId},#{item.orderNumber},#{item.drawingNumber},#{item.productName},#{item.materialQuality},#{item.},#{item.deliveryDate},#{item.remark},#{item.})
+        </foreach>
+    </insert>
+
+</mapper>

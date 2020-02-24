@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdbl.erp.dao.RoleDao">
+    <select id="select">
+        select * from tb_role
+        <where>
+            <if test="obj.id">and id = #{obj.id}</if>
+            <if test="obj.role">and role = #{obj.role}</if>
+        </where>
+        <if test="obj.page and obj.pageSize"> limit #{obj.page}, #{obj.pageSize}</if>
+    </select>
+    <update id="update">
+        update tb_role
+        <trim prefix="set" prefixOverrides="and">
+            <if test="data.id">and id = #{data.id}</if>
+            <if test="data.role">and role = #{data.role}</if>
+        </trim>
+        <where>
+            <if test="condition.id">and id = #{condition.id}</if>
+            <if test="condition.role">and role = #{condition.role}</if>
+        </where>
+    </update>
+    <delete id="delete">
+        delete from tb_role
+        <where>
+            <if test="obj.id">and id = #{obj.id}</if>
+            <if test="obj.role">and role = #{obj.role}</if>
+        </where>
+    </delete>
+    <insert id="insert">
+        insert into tb_role(role)
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.role})
+        </foreach>
+    </insert>
+
+</mapper>

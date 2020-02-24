@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdbl.erp.dao.ProductBean">
+    <select id="select">
+        select * from tb_product
+        <where>
+            <if test="obj.id">and id = #{obj.id}</if>
+            <if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>
+            <if test="obj.updateTime">and update_time = #{obj.updateTime}</if>
+            <if test="obj.drawingNumber">and drawing_number = #{obj.drawingNumber}</if>
+            <if test="obj.name">and name = #{obj.name}</if>
+            <if test="obj.materialQuality">and material_quality = #{obj.materialQuality}</if>
+            <if test="obj.type">and type = #{obj.type}</if>
+        </where>
+        <if test="obj.page and obj.pageSize">limit #{obj.page}, #{obj.pageSize}</if>
+    </select>
+    <update id="update">
+        update tb_product
+        <trim prefix="set" prefixOverrides="and">
+            <if test="data.id">and id = #{data.id}</if>
+            <if test="data.creatTime">and creat_time = #{data.creatTime}</if>
+            <if test="data.updateTime">and update_time = #{data.updateTime}</if>
+            <if test="data.drawingNumber">and drawing_number = #{data.drawingNumber}</if>
+            <if test="data.name">and name = #{data.name}</if>
+            <if test="data.materialQuality">and material_quality = #{data.materialQuality}</if>
+            <if test="data.type">and type = #{data.type}</if>
+        </trim>
+        <where>
+            <if test="condition.id">and id = #{condition.id}</if>
+            <if test="condition.creatTime">and creat_time = #{condition.creatTime}</if>
+            <if test="condition.updateTime">and update_time = #{condition.updateTime}</if>
+            <if test="condition.drawingNumber">and drawing_number = #{condition.drawingNumber}</if>
+            <if test="condition.name">and name = #{condition.name}</if>
+            <if test="condition.materialQuality">and material_quality = #{condition.materialQuality}</if>
+            <if test="condition.type">and type = #{condition.type}</if>
+        </where>
+    </update>
+    <delete id="delete">
+        delete from tb_product
+        <where>
+            <if test="obj.id">and id = #{obj.id}</if>
+            <if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>
+            <if test="obj.updateTime">and update_time = #{obj.updateTime}</if>
+            <if test="obj.drawingNumber">and drawing_number = #{obj.drawingNumber}</if>
+            <if test="obj.name">and name = #{obj.name}</if>
+            <if test="obj.materialQuality">and material_quality = #{obj.materialQuality}</if>
+            <if test="obj.type">and type = #{obj.type}</if>
+        </where>
+    </delete>
+    <insert id="insert">
+        insert into tb_product(drawing_number,name,material_quality,type)
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.drawingNumber},#{item.name},#{item.materialQuality},#{item.type})
+        </foreach>
+    </insert>
+
+</mapper>

@@ -14,7 +14,7 @@ public class DispatchRecord {
     private int number;
     private String remark;
 
-    public DispatchRecord(){};
+//    public DispatchRecord(){};
 
     public DispatchRecord(int createrId, String sheetNumber, int productId, int number) {
         this.createrId = createrId;

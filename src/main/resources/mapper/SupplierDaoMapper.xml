@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdbl.erp.dao.SupplierDao">
+    <!--private int id;-->
+    <!--private Date creatTime;-->
+    <!--private Date updateTime;-->
+    <!--private String name; //供应商名称-->
+    <!--private String simple_name; //供应商简称-->
+    <!--private boolean isPurchase; //可否外协-->
+    <!--private boolean isOutsource; //可否外购-->
+    <!--private boolean isCooperation; //合作状态-->
+    <select id="select" resultType="com.hdbl.erp.entity.SupplierBean">
+        select * from tb_supplier
+        <where>
+            <if test="obj.id">and id = #{obj.id}</if>
+            <if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>
+            <if test="obj.updateTime">and update_time = #{obj.updateTime}</if>
+            <if test="obj.name">and name = #{obj.name}</if>
+            <if test="obj.simple_name">and simple_name = #{obj.simple_name}</if>
+            <if test="obj.isPurchase">and is_purchase = #{obj.isPurchase}</if>
+            <if test="obj.isOutsource">and is_outsource = #{obj.isOutsource}</if>
+            <if test="obj.isCooperation">and is_cooperation = #{obj.isCooperation}</if>
+        </where>
+        <if test="obj.page and obj.pageSize"> limit #{obj.page}, #{obj.pageSize}</if>
+    </select>
+
+    <update id="update">
+        update tb_supplier
+        <trim prefix="set" prefixOverrides="and">
+            <if test="data.name">and name = #{data.name}</if>
+            <if test="data.simple_name">and simple_name = #{data.simple_name}</if>
+            <if test="data.isPurchase">and is_purchase = #{data.isPurchase}</if>
+            <if test="data.isOutsource">and is_outsource = #{data.isOutsource}</if>
+            <if test="data.isCooperation">and is_cooperation = #{data.isCooperation}</if>
+        </trim>
+        <where>
+            <if test="condition.id">and id = #{condition.id}</if>
+            <if test="condition.creatTime">and creat_time = #{condition.creatTime}</if>
+            <if test="condition.updateTime">and update_time = #{condition.updateTime}</if>
+            <if test="condition.name">and name = #{condition.name}</if>
+            <if test="condition.simple_name">and simple_name = #{condition.simple_name}</if>
+            <if test="condition.isPurchase">and is_purchase = #{condition.isPurchase}</if>
+            <if test="condition.isOutsource">and is_outsource = #{condition.isOutsource}</if>
+            <if test="condition.isCooperation">and is_cooperation = #{condition.isCooperation}</if>
+        </where>
+    </update>
+    <delete id="delete">
+        delete  from tb_supplier
+        <where>
+            <if test="obj.id">and id = #{obj.id}</if>
+            <if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>
+            <if test="obj.updateTime">and update_time = #{obj.updateTime}</if>
+            <if test="obj.name">and name = #{obj.name}</if>
+            <if test="obj.simple_name">and simple_name = #{obj.simple_name}</if>
+            <if test="obj.isPurchase">and is_purchase = #{obj.isPurchase}</if>
+            <if test="obj.isOutsource">and is_outsource = #{obj.isOutsource}</if>
+            <if test="obj.isCooperation">and is_cooperation = #{obj.isCooperation}</if>
+        </where>
+    </delete>
+    <insert id="insert">
+        insert into tb_supplier(name,simple_name,is_purchase,is_outsource,is_cooperation)
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.name},#{item.simple_name},#{item.isPurchase},#{item.isOutsource},#{item.isCooperation})
+        </foreach>
+    </insert>
+</mapper>
