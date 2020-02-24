@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdbl.erp.dao.ProcessExecutionDao">
+
+   <!-- 广义覆盖查询 -->
+    <select id="getProcessExecutions" resultType="com.hdbl.erp.entity.ProcessExecution">
+        select * from tb_process_execution
+        <where>
+            <if test="obj.id"> id = #{ obj.id }</if>
+            <if test="obj.creatTime"> and creat_time = #{ obj.creatTime }</if>
+            <if test="obj.updateTime"> and update_time = #{ obj.updateTime }</if>
+            <if test="obj.productId"> and product_id = #{ obj.productId }</if>
+            <if test="obj.sequenceId"> and sequence_id = #{ obj.sequenceId }</if>
+            <if test="obj.dispatchRecordId"> and dispatch_record_id = #{ obj.dispatchRecordId }</if>
+            <if test="obj.processHourId"> and process_hour_id = #{ obj.processHourId }</if>
+            <if test="obj.dispatchNumber"> and dispatch_number = #{ obj.dispatchNumber }</if>
+            <if test="obj.workerId"> and worker_id = #{ obj.workerId }</if>
+            <if test="obj.state"> and state = #{ obj.state }</if>
+            <if test="obj.numberDebug"> and number_debug = #{ obj.numberDebug }</if>
+            <if test="obj.numberQualified"> and number_qualified = #{ obj.numberQualified }</if>
+            <if test="obj.numberPending"> and number_pending = #{ obj.numberPending }</if>
+            <if test="obj.numberWasteMaterial"> and number_waste_material = #{ obj.numberWasteMaterial }</if>
+            <if test="obj.numberWasteIndustrial"> and number_waste_industrial = #{ obj.numberWasteIndustrial }</if>
+            <if test="obj.numberRework"> and number_rework = #{ obj.numberRework }</if>
+            <if test="obj.numberReturned"> and number_returned = #{ obj.numberReturned }</if>
+            <if test="obj.isConfirm"> and is_confirm = #{ obj.isConfirm }</if>
+            <if test="obj.confirmTime"> and confirm_time = #{ obj.confirmTime }</if>
+            <if test="obj.confirmerId"> and confirmer_id = #{ obj.confirmerId }</if>
+            <if test="obj.parentId"> and parent_id = #{ obj.parentId }</if>
+            <if test="obj.startTime and obj.finishTime"> and creat_time &gt; #{obj.startTime} and creat_time &lt; #{obj.finishTime}</if>
+        </where>
+    </select>
+
+    
+    <!-- 批量插入工序记录 -->
+    <insert id="insertProcessExecutions">
+        insert into tb_process_execution(
+        product_id,
+        sequence_id,
+        dispatch_record_id,
+        process_hour_id,
+        dispatch_number,
+        worker_id,
+        state,
+        number_debug,
+        number_qualified,
+        number_pending,
+        number_waste_material,
+        number_waste_industrial,
+        number_rework,
+        number_returned,
+        is_confirm,
+        confirm_time,
+        confirmer_id,
+        parent_id
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.productId}
+            <choose>
+                <when test="item.sequenceId">,  #{ item.sequenceId }</when>
+                <otherwise> ,0</otherwise>
+            </choose>
+            <choose><when test="item.dispatchRecordId">  ,#{ item.dispatchRecordId }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.processHourId"> , #{ item.processHourId }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.dispatchNumber"> , #{ item.dispatchNumber }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.workerId"> , #{ item.workerId }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.state"> , #{ item.state }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.numberDebug"> , #{ item.numberDebug }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.numberQualified"> , #{ item.numberQualified }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.numberPending">,  #{ item.numberPending }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.numberWasteMaterial"> , #{ item.numberWasteMaterial }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.numberWasteIndustrial"> , #{ item.numberWasteIndustrial }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.numberRework"> , #{ item.numberRework }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.numberReturned"> , #{ item.numberReturned }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.isConfirm"> , #{ item.isConfirm }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.confirmTime"> , #{ item.confirmTime }</when><otherwise> ,NOW()</otherwise></choose>
+            <choose><when test="item.confirmerId"> , #{ item.confirmerId }</when><otherwise> ,0</otherwise></choose>
+            <choose><when test="item.parentId"> , #{ item.parentId }</when><otherwise> ,0</otherwise></choose>
+            )
+        </foreach>
+    </insert>
+
+    <!-- 广义覆盖修改 -->
+    <update id="updateProcessExecutions">
+        update tb_process_execution
+        <trim prefix="set" prefixOverrides="and">
+            <if test="valueMap.productId"> and product_id = #{ valueMap.productId }</if>
+            <if test="valueMap.sequenceId"> and sequence_id = #{ valueMap.sequenceId }</if>
+            <if test="valueMap.dispatchRecordId"> and dispatch_record_id = #{ valueMap.dispatchRecordId }</if>
+            <if test="valueMap.processHourId"> and process_hour_id = #{ valueMap.processHourId }</if>
+            <if test="valueMap.dispatchNumber"> and dispatch_number = #{ valueMap.dispatchNumber }</if>
+            <if test="valueMap.workerId"> and worker_id = #{ valueMap.workerId }</if>
+            <if test="valueMap.state"> and state = #{ valueMap.state }</if>
+            <if test="valueMap.numberDebug"> and number_debug = #{ valueMap.numberDebug }</if>
+            <if test="valueMap.numberQualified"> and number_qualified = #{ valueMap.numberQualified }</if>
+            <if test="valueMap.numberPending"> and number_pending = #{ valueMap.numberPending }</if>
+            <if test="valueMap.numberWasteMaterial"> and number_waste_material = #{ valueMap.numberWasteMaterial }</if>
+            <if test="valueMap.numberWasteIndustrial"> and number_waste_industrial = #{ valueMap.numberWasteIndustrial }</if>
+            <if test="valueMap.numberRework"> and number_rework = #{ valueMap.numberRework }</if>
+            <if test="valueMap.numberReturned"> and number_returned = #{ valueMap.numberReturned }</if>
+            <if test="valueMap.isConfirm"> and is_confirm = #{ valueMap.isConfirm }</if>
+            <if test="valueMap.confirmTime"> and confirm_time = #{ valueMap.confirmTime }</if>
+            <if test="valueMap.confirmerId"> and confirmer_id = #{ valueMap.confirmerId }</if>
+            <if test="valueMap.parentId"> and parent_id = #{ valueMap.parentId }</if>
+            <if test="valueMap.startTime and valueMap.finishTime"> and creat_time &gt; #{valueMap.startTime} and creat_time &lt; #{valueMap.finishTime}</if>
+        </trim>
+        <where>
+            <if test="location.id"> id = #{ location.id }</if>
+            <if test="location.creatTime"> and creat_time = #{ location.creatTime }</if>
+            <if test="location.updateTime"> and update_time = #{ location.updateTime }</if>
+            <if test="location.productId"> and product_id = #{ location.productId }</if>
+            <if test="location.sequenceId"> and sequence_id = #{ location.sequenceId }</if>
+            <if test="location.dispatchRecordId"> and dispatch_record_id = #{ location.dispatchRecordId }</if>
+            <if test="location.processHourId"> and process_hour_id = #{ location.processHourId }</if>
+            <if test="location.dispatchNumber"> and dispatch_number = #{ location.dispatchNumber }</if>
+            <if test="location.workerId"> and worker_id = #{ location.workerId }</if>
+            <if test="location.state"> and state = #{ location.state }</if>
+            <if test="location.numberDebug"> and number_debug = #{ location.numberDebug }</if>
+            <if test="location.numberQualified"> and number_qualified = #{ location.numberQualified }</if>
+            <if test="location.numberPending"> and number_pending = #{ location.numberPending }</if>
+            <if test="location.numberWasteMaterial"> and number_waste_material = #{ location.numberWasteMaterial }</if>
+            <if test="location.numberWasteIndustrial"> and number_waste_industrial = #{ location.numberWasteIndustrial }</if>
+            <if test="location.numberRework"> and number_rework = #{ location.numberRework }</if>
+            <if test="location.numberReturned"> and number_returned = #{ location.numberReturned }</if>
+            <if test="location.isConfirm"> and is_confirm = #{ location.isConfirm }</if>
+            <if test="location.confirmTime"> and confirm_time = #{ location.confirmTime }</if>
+            <if test="location.confirmerId"> and confirmer_id = #{ location.confirmerId }</if>
+            <if test="location.parentId"> and parent_id = #{ location.parentId }</if>
+            <if test="location.startTime and location.finishTime"> and creat_time &gt; #{location.startTime} and creat_time &lt; #{location.finishTime}</if>
+        </where>
+    </update>
+
+    <!-- 广义覆盖删除 -->
+    <delete id="deleteProcessExecutions">
+        delete from tb_process_execution
+        <where>
+            <if test="obj.id"> id = #{ obj.id }</if>
+            <if test="obj.creatTime"> and creat_time = #{ obj.creatTime }</if>
+            <if test="obj.updateTime"> and update_time = #{ obj.updateTime }</if>
+            <if test="obj.productId"> and product_id = #{ obj.productId }</if>
+            <if test="obj.sequenceId"> and sequence_id = #{ obj.sequenceId }</if>
+            <if test="obj.dispatchRecordId"> and dispatch_record_id = #{ obj.dispatchRecordId }</if>
+            <if test="obj.processHourId"> and process_hour_id = #{ obj.processHourId }</if>
+            <if test="obj.dispatchNumber"> and dispatch_number = #{ obj.dispatchNumber }</if>
+            <if test="obj.workerId"> and worker_id = #{ obj.workerId }</if>
+            <if test="obj.state"> and state = #{ obj.state }</if>
+            <if test="obj.numberDebug"> and number_debug = #{ obj.numberDebug }</if>
+            <if test="obj.numberQualified"> and number_qualified = #{ obj.numberQualified }</if>
+            <if test="obj.numberPending"> and number_pending = #{ obj.numberPending }</if>
+            <if test="obj.numberWasteMaterial"> and number_waste_material = #{ obj.numberWasteMaterial }</if>
+            <if test="obj.numberWasteIndustrial"> and number_waste_industrial = #{ obj.numberWasteIndustrial }</if>
+            <if test="obj.numberRework"> and number_rework = #{ obj.numberRework }</if>
+            <if test="obj.numberReturned"> and number_returned = #{ obj.numberReturned }</if>
+            <if test="obj.isConfirm"> and is_confirm = #{ obj.isConfirm }</if>
+            <if test="obj.confirmTime"> and confirm_time = #{ obj.confirmTime }</if>
+            <if test="obj.confirmerId"> and confirmer_id = #{ obj.confirmerId }</if>
+            <if test="obj.parentId"> and parent_id = #{ obj.parentId }</if>
+            <if test="obj.startTime and obj.finishTime"> and creat_time &gt; #{obj.startTime} and creat_time &lt; #{obj.finishTime}</if>
+        </where>
+    </delete>
+</mapper>

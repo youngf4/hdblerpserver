@@ -9,9 +9,11 @@ public class ProcessExecution {
     private int id;
     private Date CreatTime;
     private Date  updateTime;
+    private int productId; //生产产品ID
     private int sequenceId; //工序顺序号
     private int dispatchRecordId; //派工单记录ID
     private int processHourId; //工序工时ID
+    private int dispatchNumber; //指派数量
     private int workerId; //执行工人ID
     private int state; //状态
     private BigDecimal numberDebug; //调试合格数量，允许小数
@@ -23,8 +25,32 @@ public class ProcessExecution {
     private int numberReturned; //退换货数量
     private boolean isConfirm; //是否合格确认
     private Date confirmTime; //确认时间
-    private int iconfirmerId; //质检确认人
+    private int confirmerId; //质检确认人
     private int parentId; //返修或退换货追踪编号
+
+    public ProcessExecution() {
+    }
+
+    public ProcessExecution(int productId, int sequenceId) {
+        this.productId = productId;
+        this.sequenceId = sequenceId;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public int getDispatchNumber() {
+        return dispatchNumber;
+    }
+
+    public void setDispatchNumber(int dispatchNumber) {
+        this.dispatchNumber = dispatchNumber;
+    }
 
     public int getId() {
         return id;
@@ -162,12 +188,12 @@ public class ProcessExecution {
         this.confirmTime = confirmTime;
     }
 
-    public int getIconfirmerId() {
-        return iconfirmerId;
+    public int getConfirmerId() {
+        return confirmerId;
     }
 
-    public void setIconfirmerId(int iconfirmerId) {
-        this.iconfirmerId = iconfirmerId;
+    public void setConfirmerId(int confirmerId) {
+        this.confirmerId = confirmerId;
     }
 
     public int getParentId() {
@@ -184,9 +210,11 @@ public class ProcessExecution {
                 "id=" + id +
                 ", CreatTime=" + CreatTime +
                 ", updateTime=" + updateTime +
+                ", productId=" + productId +
                 ", sequenceId=" + sequenceId +
                 ", dispatchRecordId=" + dispatchRecordId +
                 ", processHourId=" + processHourId +
+                ", dispatchNumber=" + dispatchNumber +
                 ", workerId=" + workerId +
                 ", state=" + state +
                 ", numberDebug=" + numberDebug +
@@ -198,7 +226,7 @@ public class ProcessExecution {
                 ", numberReturned=" + numberReturned +
                 ", isConfirm=" + isConfirm +
                 ", confirmTime=" + confirmTime +
-                ", iconfirmerId=" + iconfirmerId +
+                ", confirmerId=" + confirmerId +
                 ", parentId=" + parentId +
                 '}';
     }

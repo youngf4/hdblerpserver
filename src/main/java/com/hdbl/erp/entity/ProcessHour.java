@@ -13,6 +13,16 @@ public class ProcessHour {
     private int debugHour; //调试工时
     private int quotaHour; //定额工时
 
+    public ProcessHour() {
+    }
+
+    public ProcessHour(int processId, int equipmentId, int debugHour, int quotaHour) {
+        this.processId = processId;
+        this.equipmentId = equipmentId;
+        this.debugHour = debugHour;
+        this.quotaHour = quotaHour;
+    }
+
     public int getId() {
         return id;
     }

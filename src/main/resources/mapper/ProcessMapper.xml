@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdbl.erp.dao.ProcessDao">
+
+   <!-- 广义覆盖查询 -->
+    <select id="getProcesses" resultType="com.hdbl.erp.entity.ProcessBean">
+        select * from tb_process
+        <where>
+            <if test="obj.id"> id = #{ obj.id }</if>
+            <if test="obj.name"> and name = #{ obj.name }</if>
+        </where>
+    </select>
+
+    <!-- 批量插入工序记录 -->
+    <insert id="insertProcesses">
+        insert into tb_process( name)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.name})
+        </foreach>
+    </insert>
+
+    <!-- 广义覆盖修改 -->
+    <update id="updateProcesses">
+        update tb_process
+        <trim prefix="set" prefixOverrides="and">
+            <if test="valueMap.name"> and name = #{ valueMap.name }</if>
+        </trim>
+        <where>
+            <if test="location.id"> id = #{ location.id }</if>
+            <if test="location.name"> and name = #{ location.name }</if>
+        </where>
+    </update>
+
+    <!-- 广义覆盖删除 -->
+    <delete id="deleteProcesses">
+        delete from tb_process
+        <where>
+            <if test="obj.id"> id = #{ obj.id }</if>
+            <if test="obj.name"> and name = #{ obj.name }</if>
+        </where>
+    </delete>
+</mapper>
