@@ -1,6 +1,8 @@
-package com.hdbl.erp.sevice;
+package com.hdbl.erp.service;
 
+import com.hdbl.erp.dao.UserDao;
 import com.hdbl.erp.entity.UserBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ import java.util.HashMap;
 @Service
 public class UserService{
     public static int SUCCESS=1,FILED=0;
+    @Autowired
+    UserDao userDao;
     public UserBean vertify(String account, String password){
         /*
         验证用户名密码:
@@ -17,6 +21,7 @@ public class UserService{
         param: password 密码
         return: 如果验证成功就返回用户信息，否者返回null
         */
+
         return null;
     }
     public int addUser(HashMap<String,Object> userinfo){
@@ -78,6 +83,14 @@ public class UserService{
          * param: user UserBean 对象，查找用户的模糊信息
          * return: 返回查找到的用户，没查找到返回空数组
          */
+
+
+        return null;
+    }
+    private HashMap<String,Object> toSelectMap(UserBean user,int page,int pageSize){
+
+        // TODO 将bean对象转换成查找的hashmap
+
         return null;
     }
     private String hash(String password){

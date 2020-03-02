@@ -1,4 +1,4 @@
-package com.hdbl.erp.sevice;
+package com.hdbl.erp.service;
 
 import com.hdbl.erp.entity.DispatchRecord;
 

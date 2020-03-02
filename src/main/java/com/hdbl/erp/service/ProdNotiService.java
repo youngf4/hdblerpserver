@@ -1,4 +1,4 @@
-package com.hdbl.erp.sevice;
+package com.hdbl.erp.service;
 
 import com.hdbl.erp.entity.ProdNotification;
 
@@ -16,22 +16,19 @@ public class ProdNotiService {
          * param: page分页的话使用的分页页数
          * param: pageSize分页的话每页的大小
         * */
-        return this.search(p,end,like,page,pageSize,true);
+        return null;
     }
-    public ArrayList<ProdNotification> getAllProdNotifications(ProdNotification p,ProdNotification end,String like,int page,int pageSize,String username){
-        /*
-         * 查找的接口方法
-         * param: p产品信息,如果有范围相关的参数，范围参数的开始用着个传递
-         * param: end如果有范围相关的参数，范围参数的结尾用着个传递，没有范围相关则为null
-         * param: like模糊匹配使用
-         * param: page分页的话使用的分页页数
-         * param: pageSize分页的话每页的大小
-         * param: pageSize分页
-         * */
+
+    /**
+     *
+     * @param searchmap 查询用的map
+     */
+    public ArrayList<ProdNotification> getAllProdNotifications(HashMap<String,Object> searchmap,String like,int page,int pageSize,String username){
         // TODO 先掉用userservice查询是否能看再返回结果
-        return this.search(p,end,like,page,pageSize,false);
+        return this.search(searchmap,true);
 
     }
+
     public String create(HashMap<String,Object> prod){
         /**
          * 创建一个生产通知
@@ -94,7 +91,7 @@ public class ProdNotiService {
          */
         return null;
     }
-    private ArrayList<ProdNotification> search(ProdNotification p,ProdNotification end,String like,int page,int pageSize,boolean mask){
+    private ArrayList<ProdNotification> search(HashMap<String,Object> searchmap,boolean mask){
         /*
         *查找方法
         * param: p产品信息,如果有范围相关的参数，范围参数的开始用着个传递
