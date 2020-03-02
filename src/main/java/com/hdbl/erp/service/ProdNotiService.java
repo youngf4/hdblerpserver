@@ -1,13 +1,21 @@
 package com.hdbl.erp.service;
 
+import com.hdbl.erp.dao.ProdNotificationDao;
 import com.hdbl.erp.entity.ProdNotification;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProdNotiService {
     public static int SUCCESS=1,FAILLED=0,ABORD=-1;
-    public ArrayList<ProdNotification> getProdNotifications(ProdNotification p,ProdNotification end,String like,int page,int pageSize){
+    public ArrayList<ProdNotification> getProdNotifications(ProdNotification p,HashMap<String,Object> searchMap,String like,int page,int pageSize){
         /*
         * 查找的接口方法
          * param: p产品信息,如果有范围相关的参数，范围参数的开始用着个传递
@@ -26,7 +34,19 @@ public class ProdNotiService {
     public ArrayList<ProdNotification> getAllProdNotifications(HashMap<String,Object> searchmap,String like,int page,int pageSize,String username){
         // TODO 先掉用userservice查询是否能看再返回结果
         return this.search(searchmap,true);
-
+    }
+    public ArrayList<ProdNotification> getAllProdNotifications(ProdNotification p,HashMap<String,Object> searchMap,String like,int page,int pageSize,String username){
+        /*
+         * 查找的接口方法
+         * param: p产品信息,如果有范围相关的参数，范围参数的开始用着个传递
+         * param: end如果有范围相关的参数，范围参数的结尾用着个传递，没有范围相关则为null
+         * param: like模糊匹配使用
+         * param: page分页的话使用的分页页数
+         * param: pageSize分页的话每页的大小
+         * param: pageSize分页
+         * */
+        // TODO 先掉用userservice查询是否能看再返回结果
+        return null;
     }
 
     public String create(HashMap<String,Object> prod){
@@ -35,8 +55,13 @@ public class ProdNotiService {
          * param:prod要创建的生产通知
          * return null-创建失败 通知单号-创建成功 -1-格式错误
          */
-        // TODO 先转换后创建
-    return null;
+        //查询接口
+        //获取最新通知单号
+        HashMap<String, Object> searchMap = new HashMap<>();
+        searchMap.put("decs", "desc");
+        searchMap.put("page",0);
+        searchMap.put("pageSoze",1);
+        return null;
     }
     // 默认锁定时长20分钟，20分钟后无人更新锁数据锁自动释放
     public String lock(String num) {
@@ -101,6 +126,9 @@ public class ProdNotiService {
         * param: pageSize分页的话每页的大小
         * param: mask 是否隐藏部分操作
         * */
+
+
         return null;
     }
+
 }
