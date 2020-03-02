@@ -1,13 +1,21 @@
-package com.hdbl.erp.sevice;
+package com.hdbl.erp.service;
 
+import com.hdbl.erp.dao.ProdNotificationDao;
 import com.hdbl.erp.entity.ProdNotification;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProdNotiService {
     public static int SUCCESS=1,FAILLED=0,ABORD=-1;
-    public ArrayList<ProdNotification> getProdNotifications(ProdNotification p,ProdNotification end,String like,int page,int pageSize){
+    public ArrayList<ProdNotification> getProdNotifications(ProdNotification p,HashMap<String,Object> searchMap,String like,int page,int pageSize){
         /*
         * 查找的接口方法
          * param: p产品信息,如果有范围相关的参数，范围参数的开始用着个传递
@@ -16,9 +24,9 @@ public class ProdNotiService {
          * param: page分页的话使用的分页页数
          * param: pageSize分页的话每页的大小
         * */
-        return this.search(p,end,like,page,pageSize,true);
+        return this.search(p,searchMap,like,page,pageSize,true);
     }
-    public ArrayList<ProdNotification> getAllProdNotifications(ProdNotification p,ProdNotification end,String like,int page,int pageSize,String username){
+    public ArrayList<ProdNotification> getAllProdNotifications(ProdNotification p,HashMap<String,Object> searchMap,String like,int page,int pageSize,String username){
         /*
          * 查找的接口方法
          * param: p产品信息,如果有范围相关的参数，范围参数的开始用着个传递
@@ -29,7 +37,7 @@ public class ProdNotiService {
          * param: pageSize分页
          * */
         // TODO 先掉用userservice查询是否能看再返回结果
-        return this.search(p,end,like,page,pageSize,false);
+        return this.search(p,searchMap,like,page,pageSize,false);
 
     }
     public String create(HashMap<String,Object> prod){
@@ -38,8 +46,28 @@ public class ProdNotiService {
          * param:prod要创建的生产通知
          * return null-创建失败 通知单号-创建成功 -1-格式错误
          */
-        // TODO 先转换后创建
-    return null;
+        //查询接口
+        SqlSession session = this.getSqlFactory().openSession();
+        ProdNotificationDao prodNotificationDao = session.getMapper(ProdNotificationDao.class);
+        //获取最新通知单号
+        HashMap<String, Object> searchMap = new HashMap<>();
+        searchMap.put("decs", "desc");
+        searchMap.put("page",0);
+        searchMap.put("pageSoze",1);
+        String lastNoticedNumber = prodNotificationDao.select(searchMap).get(0).getNotice_number();
+        String newNumber = String.valueOf(Integer.parseInt(lastNoticedNumber)+1);
+        //转换后创建
+        ProdNotification prodNotification = new ProdNotification();
+        prodNotification.setNotice_number(newNumber);
+        prodNotification.setWorking_number((String)prod.get("workingNumber"));
+        prodNotification.setWorking_number((String)prod.get("orderUnit"));
+        ArrayList<ProdNotification> list = new ArrayList<>();
+        list.add(prodNotification);
+        int result = prodNotificationDao.insert(list);
+        if(result==1) {
+            return newNumber;
+        }
+        return null;
     }
     // 默认锁定时长20分钟，20分钟后无人更新锁数据锁自动释放
     public String lock(String num) {
@@ -94,7 +122,7 @@ public class ProdNotiService {
          */
         return null;
     }
-    private ArrayList<ProdNotification> search(ProdNotification p,ProdNotification end,String like,int page,int pageSize,boolean mask){
+    private ArrayList<ProdNotification> search(ProdNotification p,HashMap<String,Object> searchMap,String like,int page,int pageSize,boolean mask){
         /*
         *查找方法
         * param: p产品信息,如果有范围相关的参数，范围参数的开始用着个传递
@@ -104,6 +132,49 @@ public class ProdNotiService {
         * param: pageSize分页的话每页的大小
         * param: mask 是否隐藏部分操作
         * */
+        SqlSession session = this.getSqlFactory().openSession();
+        ProdNotificationDao prodNotificationDao = session.getMapper(ProdNotificationDao.class);
+        //对象转成map，稍后抽象成方法调用
+        Field[] fields = p.getClass().getDeclaredFields();
+        for(Field f : fields){
+            try {
+                searchMap.put(f.getName(),f.get(p));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        //分页查询参数
+        int start = (page-1)*pageSize;
+        searchMap.put("page", start);
+        searchMap.put("pageSize", pageSize);
+        //调用DAO查询
+        ArrayList<ProdNotification> prodNotifications = prodNotificationDao.select(searchMap);
+        session.close();
+        // mark = true：隐藏部分操作。将visibility = false（不可见）的记录剔除掉
+        if(mask){
+            for(ProdNotification prod : prodNotifications){
+                if(!prod.isVisibility()){
+                    prodNotifications.remove(prod);
+                }
+            }
+        }
+        return prodNotifications;
+    }
+
+    /**
+     * 获取SqlSessionFactory
+     * @return
+     */
+    private SqlSessionFactory getSqlFactory(){
+        try {
+            String resource = "mybatis-config.xml";
+            InputStream inputStream = null;
+            inputStream = Resources.getResourceAsStream(resource);
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+            return sqlSessionFactory;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

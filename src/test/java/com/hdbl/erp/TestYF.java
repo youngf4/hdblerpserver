@@ -28,7 +28,8 @@ public class TestYF {
     void testSelectOnActualWorkhourDao(){
         System.out.println("----------test select----------");
         HashMap<String,Object> map = new HashMap<>();
-        map.put( "equipmentId" , 1);
+//        map.put( "id" , "(select max(id) from tb_actual_workhour)");
+        map.put( "id" , 18);
 //        map.put( "page" , 3);
 //        map.put( "pageSize" , 5);
         List<ActualWorkhour> list =  actualWorkhourDao.getRecords(map);
