@@ -14,7 +14,7 @@ public class ProdNotiService {
          * param: end如果有范围相关的参数，范围参数的结尾用着个传递，没有范围相关则为null
          * param: like模糊匹配使用
          * param: page分页的话使用的分页页数
-         * param: pageSize分页的话每页的大小
+         * param: pageSize分页的话每页的大小pp
         * */
         return this.search(p,end,like,page,pageSize,true);
     }
