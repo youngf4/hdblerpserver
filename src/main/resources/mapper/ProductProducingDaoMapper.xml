@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hdbl.erp.dao.ProductProducingDao">
-    <select id="select">
+    <select id="select" resultType="java.util.HashMap">
         select * from
         <choose>
             <when test="obj.viewName != null and obj.viewName != ''"> #{obj.viewName}</when>
@@ -23,7 +23,6 @@
             <if test="obj.drawingNumber">and drawing_number = #{obj.drawingNumber}</if>
             <if test="obj.productName">and product_name = #{obj.productName}</if>
             <if test="obj.materialQuality">and material_quality = #{obj.materialQuality}</if>
-            <if test="obj.">and  = #{obj.}</if>
             <if test="obj.deliveryDate">and delivery_date = #{obj.deliveryDate}</if>
             <if test="obj.remark">and remark = #{obj.remark}</if>
         </where>
@@ -47,7 +46,6 @@
             <if test="data.drawingNumber">and drawing_number = #{data.drawingNumber}</if>
             <if test="data.productName">and product_name = #{data.productName}</if>
             <if test="data.materialQuality">and material_quality = #{data.materialQuality}</if>
-            <if test="data.">and  = #{data.}</if>
             <if test="data.deliveryDate">and delivery_date = #{data.deliveryDate}</if>
             <if test="data.remark">and remark = #{data.remark}</if>
         </trim>
@@ -67,7 +65,6 @@
             <if test="condition.drawingNumber">and drawing_number = #{condition.drawingNumber}</if>
             <if test="condition.productName">and product_name = #{condition.productName}</if>
             <if test="condition.materialQuality">and material_quality = #{condition.materialQuality}</if>
-            <if test="condition.">and  = #{condition.}</if>
             <if test="condition.deliveryDate">and delivery_date = #{condition.deliveryDate}</if>
             <if test="condition.remark">and remark = #{condition.remark}</if>
         </where>
@@ -90,7 +87,6 @@
             <if test="obj.drawingNumber">and drawing_number = #{obj.drawingNumber}</if>
             <if test="obj.productName">and product_name = #{obj.productName}</if>
             <if test="obj.materialQuality">and material_quality = #{obj.materialQuality}</if>
-            <if test="obj.">and  = #{obj.}</if>
             <if test="obj.deliveryDate">and delivery_date = #{obj.deliveryDate}</if>
             <if test="obj.remark">and remark = #{obj.remark}</if>
         </where>
