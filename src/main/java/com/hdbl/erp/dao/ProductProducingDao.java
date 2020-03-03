@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface  ProductProducingDao{
-    public ArrayList<ProductProducing> select(@Param("args") HashMap<String,Object> args);
+    public List<HashMap> select(@Param("args") HashMap<String,Object> args);
     public int update(@Param("condition") HashMap<String,Object> condition,@Param("data")HashMap<String,Object> data);
     public int insert(List<ProductProducing> list);
     public int delete(@Param("obj")HashMap<String,Object> obj);

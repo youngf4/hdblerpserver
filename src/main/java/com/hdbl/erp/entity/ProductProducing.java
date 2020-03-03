@@ -8,6 +8,7 @@ public class ProductProducing {
     private int id;
     private Date creatTime;
     private Date updateTime;
+    private int creater;
     private int type; //类型(生产品/返修品/工装品）
     private int state;
     private int noticeId; //通知单ID
@@ -46,6 +47,14 @@ public class ProductProducing {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public int getCreater() {
+        return creater;
+    }
+
+    public void setCreater(int creater) {
+        this.creater = creater;
     }
 
     public int getType() {
@@ -174,6 +183,7 @@ public class ProductProducing {
                 "id=" + id +
                 ", creatTime=" + creatTime +
                 ", updateTime=" + updateTime +
+                ", creater=" + creater +
                 ", type=" + type +
                 ", state=" + state +
                 ", noticeId=" + noticeId +

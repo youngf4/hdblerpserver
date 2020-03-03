@@ -22,6 +22,25 @@ public class TestYF {
      ---------------------------*/
 
     @Autowired
+    ProductProducingDao productProducingDao;
+
+    @Test
+    void testSelectOnProductProducingDao(){
+        System.out.println("----------test testSelectOnProductProducingDao----------");
+        HashMap<String,Object> map = new HashMap<>();
+        map.put( "type" , 2);
+//        map.put( "page" , 3);
+//        map.put( "pageSize" , 5);
+        List<HashMap> list =  productProducingDao.select(map);
+        for(HashMap o : list){
+            System.out.println(o.toString());
+        }
+    }
+
+
+
+
+    @Autowired
     ActualWorkhourDao actualWorkhourDao;
 
     @Test
