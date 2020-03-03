@@ -1,14 +1,15 @@
 package com.hdbl.erp.service;
 
 import com.hdbl.erp.dao.ProdNotificationDao;
+import com.hdbl.erp.dao.UtilDao;
 import com.hdbl.erp.entity.ProdNotification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 // 生产通知
+@Service
 public class ProdNotiService {
     public static int SUCCESS=1,FAILLED=0,ABORD=-1;
     @Autowired
@@ -31,6 +32,45 @@ public class ProdNotiService {
 
     }
 
+    public int insertProdNotification(HashMap<String,Object> prod){
+        List<HashMap<String,Object>> s=new ArrayList<HashMap<String,Object>>();
+        prod = formatInsertMap(prod);
+        s.add(prod);
+        int res = prodNotificationDao.insert(s);
+        return res;
+    }
+    @Autowired
+    UtilDao utilDao;
+    private HashMap<String,Object> formatInsertMap(HashMap<String,Object> map){
+        //,,,,,,,,,,,,,,,,,)
+        HashMap<String,Object> defaultMap=new HashMap<String, Object>();
+        defaultMap.put("state",1);
+        defaultMap.put("visibility",1);
+        defaultMap.put("noticeNumber",utilDao.getMaxValue("notice_number").get("value"));
+        defaultMap.put("working_number","");
+        defaultMap.put("order_unit","");
+        defaultMap.put("delivery_method","");
+        defaultMap.put("delivery_state","");
+        defaultMap.put("delivery_place","");
+        defaultMap.put("is_in_batches",0);
+        defaultMap.put("delivery_date",new Date());
+        defaultMap.put("remark","");
+        defaultMap.put("compiling_person","");
+        defaultMap.put("submit_time","");
+        defaultMap.put("auditor","");
+        defaultMap.put("audit_time", new Date());
+        defaultMap.put("audit_remark","");
+        defaultMap.put("approver",11);
+        defaultMap.put("approve_time",new Date());
+        defaultMap.put("approve_remark","");
+        Set<String> set = defaultMap.keySet();
+        for(String key:set){
+            if (!map.containsKey(key)){
+                map.put(key,defaultMap.get(key));
+            }
+        }
+        return map;
+    }
     /**
      * 通过 id 查询一个生产通知单的详细信息
      * @param id

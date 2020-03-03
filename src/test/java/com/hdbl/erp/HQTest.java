@@ -1,7 +1,10 @@
 package com.hdbl.erp;
 
+import com.hdbl.erp.dao.ProductProducingDao;
 import com.hdbl.erp.dao.UserDao;
+import com.hdbl.erp.dao.UtilDao;
 import com.hdbl.erp.entity.UserBean;
+import com.hdbl.erp.service.ProdNotiService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,8 +23,23 @@ public class HQTest {
 
 //        userDao.insert(list);
     }
+
+
+    @Autowired
+    ProdNotiService prodNotiService;
     @Test
-    void test4UserDao(){
+    void tes4ProductService(){
+        HashMap<String,Object> map = new HashMap<String,Object>();
+
+    }
+    @Autowired
+    UtilDao utilDao;
+    @Test
+    void test4util(){
+        System.out.println(utilDao.getMaxValue("notice_number"));
+    }
+    @Test
+    void test4UserDao() {
         System.out.println("-----------------");
         System.out.println(userDao.select(new HashMap<>()));
         System.out.println("123");

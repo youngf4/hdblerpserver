@@ -29,6 +29,17 @@
         </where>
         <if test="obj.page and obj.pageSize">limit #{obj.page}, #{obj.pageSize}</if>
     </select>
+    <select id="summary">
+        select count(*) from tb_notice_production
+        <where>
+            <if test="obj.state">
+                and state = #{obj.state}
+            </if>
+        </where>
+    </select>
+
+
+
     <update id="update">
         update tb_notice_production
         <trim prefix="set" prefixOverrides="and">
@@ -80,6 +91,7 @@
             <if test="condition.approveRemark">and approve_remark = #{condition.approveRemark}</if>
         </where>
     </update>
+
     <delete id="delete">
         delete from tb_notice_production
         <where>
