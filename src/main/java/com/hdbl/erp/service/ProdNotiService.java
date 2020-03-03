@@ -1,13 +1,19 @@
-package com.hdbl.erp.sevice;
+package com.hdbl.erp.service;
 
+import com.hdbl.erp.dao.ProdNotificationDao;
 import com.hdbl.erp.entity.ProdNotification;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+// 生产通知
 public class ProdNotiService {
     public static int SUCCESS=1,FAILLED=0,ABORD=-1;
-    public ArrayList<ProdNotification> getProdNotifications(ProdNotification p,ProdNotification end,String like,int page,int pageSize){
+    @Autowired
+    private ProdNotificationDao prodNotificationDao;
+    public ArrayList<ProdNotification> getProdNotifications(HashMap<String,Object> searchMap){
         /*
         * 查找的接口方法
          * param: p产品信息,如果有范围相关的参数，范围参数的开始用着个传递
@@ -16,21 +22,33 @@ public class ProdNotiService {
          * param: page分页的话使用的分页页数
          * param: pageSize分页的话每页的大小pp
         * */
-        return this.search(p,end,like,page,pageSize,true);
+        return this.search(searchMap,true);
     }
-    public ArrayList<ProdNotification> getAllProdNotifications(ProdNotification p,ProdNotification end,String like,int page,int pageSize,String username){
-        /*
-         * 查找的接口方法
-         * param: p产品信息,如果有范围相关的参数，范围参数的开始用着个传递
-         * param: end如果有范围相关的参数，范围参数的结尾用着个传递，没有范围相关则为null
-         * param: like模糊匹配使用
-         * param: page分页的话使用的分页页数
-         * param: pageSize分页的话每页的大小
-         * param: pageSize分页
-         * */
-        // TODO 先掉用userservice查询是否能看再返回结果
-        return this.search(p,end,like,page,pageSize,false);
 
+    public ArrayList<ProdNotification> getAllProdNotifications(HashMap<String,Object> searchMap){
+
+        return this.search(searchMap,false);
+
+    }
+
+    /**
+     * 通过 id 查询一个生产通知单的详细信息
+     * @param id
+     * @return 返回结果
+     */
+    public ProdNotification getProdNotficationById(String id){
+        HashMap<String,Object> searchMap = this.buildDefaultSearchMap();
+        searchMap.put("id",id);
+        ArrayList<ProdNotification> resault = this.search(searchMap,false);
+        if (resault.size() != 1)return null;
+        return resault.get(0);
+    }
+
+    private HashMap<String,Object> buildDefaultSearchMap(){
+        HashMap<String,Object> defaultMap = new HashMap<String, Object>();
+        defaultMap.put("page",0);
+        defaultMap.put("pageSize",20);
+        return defaultMap;
     }
     public String create(HashMap<String,Object> prod){
         /**
@@ -94,7 +112,7 @@ public class ProdNotiService {
          */
         return null;
     }
-    private ArrayList<ProdNotification> search(ProdNotification p,ProdNotification end,String like,int page,int pageSize,boolean mask){
+    private ArrayList<ProdNotification> search(HashMap<String,Object> searchMap,boolean mask){
         /*
         *查找方法
         * param: p产品信息,如果有范围相关的参数，范围参数的开始用着个传递
@@ -104,6 +122,11 @@ public class ProdNotiService {
         * param: pageSize分页的话每页的大小
         * param: mask 是否隐藏部分操作
         * */
+        if (mask){
+            searchMap.put("visibility",1);
+        }else {
+            searchMap.put("visibility",0);
+        }
         return null;
     }
 }

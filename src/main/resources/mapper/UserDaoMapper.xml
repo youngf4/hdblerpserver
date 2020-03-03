@@ -13,7 +13,17 @@
         private String openid; -->
         <!-- 广义查询-->
     <select id="select" resultType="com.hdbl.erp.entity.UserBean" parameterType="java.util.HashMap">
-        select * from tb_user
+        select
+        *
+        from
+        <choose>
+            <when test="obj.viewname != null and obj.viewname !=''">
+                #{obj.viewname},
+            </when>
+            <otherwise>
+                tb_user
+            </otherwise>
+        </choose>
         <where>
           <if test="obj.id!=null">
             id = #{obj.id}
