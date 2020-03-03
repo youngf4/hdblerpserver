@@ -10,7 +10,7 @@ public class ProductProducing {
     private int id;
     private Date creatTime;
     private Date updateTime;
-    private int creater;
+    private int createrId;
     private int type; //类型(生产品/返修品/工装品）
     private int state;
     private int noticeId; //通知单ID
@@ -26,6 +26,20 @@ public class ProductProducing {
     private Date deliveryDate; //交货日期
     private String remark; //备注
     private boolean  visibility; //可见性
+
+    public ProductProducing() {
+    }
+
+    public ProductProducing(int createrId, String drawingNumber, String productName, int number, String remark) {
+        this.type = 2;
+        this.state = 2;
+        this.createrId = createrId;
+        this.drawingNumber = drawingNumber;
+        this.productName = productName;
+        this.number = number;
+        this.remark = remark;
+        this.visibility = true;
+    }
 
     public int getId() {
         return id;
@@ -51,12 +65,12 @@ public class ProductProducing {
         this.updateTime = updateTime;
     }
 
-    public int getCreater() {
-        return creater;
+    public int getCreaterId() {
+        return createrId;
     }
 
-    public void setCreater(int creater) {
-        this.creater = creater;
+    public void setCreaterId(int createrId) {
+        this.createrId = createrId;
     }
 
     public int getType() {
@@ -185,7 +199,7 @@ public class ProductProducing {
                 "id=" + id +
                 ", creatTime=" + creatTime +
                 ", updateTime=" + updateTime +
-                ", creater=" + creater +
+                ", createrId=" + createrId +
                 ", type=" + type +
                 ", state=" + state +
                 ", noticeId=" + noticeId +
