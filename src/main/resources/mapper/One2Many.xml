@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdbl.erp.dao.One2ManyDao">
+    <select id="select" resultMap="resmap">
+        SELECT tb_test_one.id as id,tb_test_one.name as name,tb_test_m.id as mid,tb_test_m.outid as id2 from
+tb_test_one
+LEFT join
+tb_test_m
+on tb_test_m.outid = tb_test_one.id
+    </select>
+    <resultMap id="resmap" type="com.hdbl.erp.entity.One">
+        <result column="id" property="id"></result>
+        <result column="name" property="name"></result>
+        <collection property="manyList" ofType="com.hdbl.erp.entity.Many">
+            <id property="id" column="m_id"></id>
+            <result column="id2" property="outid"></result>
+        </collection>
+    </resultMap>
+</mapper>
