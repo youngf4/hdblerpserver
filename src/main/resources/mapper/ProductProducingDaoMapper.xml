@@ -2,18 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hdbl.erp.dao.ProductProducingDao">
     <select id="select" resultType="java.util.HashMap">
-        select * from
-        <choose>
-            <when test="obj.viewName != null and obj.viewName != ''"> #{obj.viewName}</when>
-            <otherwise> tb_product_producing</otherwise>
-        </choose>
+        select * from tb_product_producing
         <where>
             <if test="obj.id">and id = #{obj.id}</if>
             <if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>
             <if test="obj.updateTime">and update_time = #{obj.updateTime}</if>
-            <if test="obj.creater">and creater = #{obj.creater}</if>
+            <if test="obj.createrId">and creater_id = #{obj.createrId}</if>
             <if test="obj.type">and type = #{obj.type}</if>
-            <if test="obj.state">and state = #{obj.state}</if>
+            <if test="obj.stateBegin and obj.stateEnd">and state &gt; #{obj.stateBegin} and state &lt; #{obj.stateEnd}</if>
             <if test="obj.noticeId">and notice_id = #{obj.noticeId}</if>
             <if test="obj.noticeNumber">and notice_number = #{obj.noticeNumber}</if>
             <if test="obj.processVersionId">and process_version_id = #{obj.processVersionId}</if>
@@ -30,30 +26,30 @@
     </select>
     <update id="update">
         update tb_product_producing
-        <trim prefix="set" prefixOverrides="and">
-            <if test="data.id">and id = #{data.id}</if>
-            <if test="data.creatTime">and creat_time = #{data.creatTime}</if>
-            <if test="data.updateTime">and update_time = #{data.updateTime}</if>
-            <if test="obj.creater">and creater = #{obj.creater}</if>
-            <if test="data.type">and type = #{data.type}</if>
-            <if test="data.state">and state = #{data.state}</if>
-            <if test="data.noticeId">and notice_id = #{data.noticeId}</if>
-            <if test="data.noticeNumber">and notice_number = #{data.noticeNumber}</if>
-            <if test="data.processVersionId">and process_version_id = #{data.processVersionId}</if>
-            <if test="data.processVersionNumber">and process_version_number = #{data.processVersionNumber}</if>
-            <if test="data.executionId">and execution_id = #{data.executionId}</if>
-            <if test="data.orderNumber">and order_number = #{data.orderNumber}</if>
-            <if test="data.drawingNumber">and drawing_number = #{data.drawingNumber}</if>
-            <if test="data.productName">and product_name = #{data.productName}</if>
-            <if test="data.materialQuality">and material_quality = #{data.materialQuality}</if>
-            <if test="data.deliveryDate">and delivery_date = #{data.deliveryDate}</if>
-            <if test="data.remark">and remark = #{data.remark}</if>
+        <trim prefix="set" prefixOverrides=",">
+            <if test="data.id">, id = #{data.id}</if>
+            <if test="data.creatTime">, creat_time = #{data.creatTime}</if>
+            <if test="data.updateTime">, update_time = #{data.updateTime}</if>
+            <if test="data.createrId">, creater_id = #{data.createrId}</if>
+            <if test="data.type">, type = #{data.type}</if>
+            <if test="data.state">, state = #{data.state}</if>
+            <if test="data.noticeId">, notice_id = #{data.noticeId}</if>
+            <if test="data.noticeNumber">, notice_number = #{data.noticeNumber}</if>
+            <if test="data.processVersionId">, process_version_id = #{data.processVersionId}</if>
+            <if test="data.processVersionNumber">, process_version_number = #{data.processVersionNumber}</if>
+            <if test="data.executionId">, execution_id = #{data.executionId}</if>
+            <if test="data.orderNumber">, order_number = #{data.orderNumber}</if>
+            <if test="data.drawingNumber">, drawing_number = #{data.drawingNumber}</if>
+            <if test="data.productName">, product_name = #{data.productName}</if>
+            <if test="data.materialQuality">, material_quality = #{data.materialQuality}</if>
+            <if test="data.deliveryDate">, delivery_date = #{data.deliveryDate}</if>
+            <if test="data.remark">, remark = #{data.remark}</if>
         </trim>
         <where>
             <if test="condition.id">and id = #{condition.id}</if>
             <if test="condition.creatTime">and creat_time = #{condition.creatTime}</if>
             <if test="condition.updateTime">and update_time = #{condition.updateTime}</if>
-            <if test="obj.creater">and creater = #{obj.creater}</if>
+            <if test="condition.createrId">and creater_id = #{condition.createrId}</if>
             <if test="condition.type">and type = #{condition.type}</if>
             <if test="condition.state">and state = #{condition.state}</if>
             <if test="condition.noticeId">and notice_id = #{condition.noticeId}</if>
@@ -75,7 +71,7 @@
             <if test="obj.id">and id = #{obj.id}</if>
             <if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>
             <if test="obj.updateTime">and update_time = #{obj.updateTime}</if>
-            <if test="obj.creater">and creater = #{obj.creater}</if>
+            <if test="obj.createrId">and creater_id = #{obj.createrId}</if>
             <if test="obj.type">and type = #{obj.type}</if>
             <if test="obj.state">and state = #{obj.state}</if>
             <if test="obj.noticeId">and notice_id = #{obj.noticeId}</if>
@@ -92,9 +88,9 @@
         </where>
     </delete>
     <insert id="insert">
-        insert into tb_product_producing(creater,type,state,notice_id,notice_number,process_version_id,process_version_number,execution_id,order_number,drawing_number,product_name,material_quality,delivery_date,remark,)
+        insert into tb_product_producing(creater_id,type,state,notice_id,notice_number,process_version_id,process_version_number,execution_id,order_number,drawing_number,product_name,material_quality,delivery_date,remark) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.creater},#{item.type},#{item.state},#{item.noticeId},#{item.noticeNumber},#{item.processVersionId},#{item.processVersionNumber},#{item.executionId},#{item.orderNumber},#{item.drawingNumber},#{item.productName},#{item.materialQuality},#{item.deliveryDate},#{item.remark},#{item.})
+            (#{item.createrId},#{item.type},#{item.state},#{item.noticeId},#{item.noticeNumber},#{item.processVersionId},#{item.processVersionNumber},#{item.executionId},#{item.orderNumber},#{item.drawingNumber},#{item.productName},#{item.materialQuality},#{item.deliveryDate},#{item.remark})
         </foreach>
     </insert>
 
