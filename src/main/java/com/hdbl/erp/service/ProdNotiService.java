@@ -31,7 +31,9 @@ public class ProdNotiService {
         return this.search(searchMap,false);
 
     }
-
+    public HashMap<String,Object> getSummary(){
+        return prodNotificationDao.summary();
+    }
     public int insertProdNotification(HashMap<String,Object> prod){
         List<HashMap<String,Object>> s=new ArrayList<HashMap<String,Object>>();
         prod = formatInsertMap(prod);
@@ -47,28 +49,30 @@ public class ProdNotiService {
         defaultMap.put("state",1);
         defaultMap.put("visibility",1);
         defaultMap.put("noticeNumber",utilDao.getMaxValue("notice_number").get("value"));
-        defaultMap.put("working_number","");
-        defaultMap.put("order_unit","");
-        defaultMap.put("delivery_method","");
-        defaultMap.put("delivery_state","");
-        defaultMap.put("delivery_place","");
-        defaultMap.put("is_in_batches",0);
-        defaultMap.put("delivery_date",new Date());
+        defaultMap.put("workingNumber","none");
+        defaultMap.put("orderUnit","none");
+        defaultMap.put("deliveryMethod","none");
+        defaultMap.put("deliveryState","none");
+        defaultMap.put("deliveryPlace","none");
+        defaultMap.put("isInBatches",0);
+        defaultMap.put("deliveryDate",new Date());
         defaultMap.put("remark","");
-        defaultMap.put("compiling_person","");
-        defaultMap.put("submit_time","");
-        defaultMap.put("auditor","");
-        defaultMap.put("audit_time", new Date());
-        defaultMap.put("audit_remark","");
+        defaultMap.put("compilingPerson",1);
+        defaultMap.put("submitTime",new Date());
+        defaultMap.put("auditor",1);//审核者id
+        defaultMap.put("auditTime", new Date());
+        defaultMap.put("auditRemark","none");
         defaultMap.put("approver",11);
-        defaultMap.put("approve_time",new Date());
-        defaultMap.put("approve_remark","");
+        defaultMap.put("approveTime",new Date());
+        defaultMap.put("approveRemark","none");
         Set<String> set = defaultMap.keySet();
         for(String key:set){
             if (!map.containsKey(key)){
+                System.out.println(key+defaultMap.get(key));
                 map.put(key,defaultMap.get(key));
             }
         }
+        System.out.println(map);
         return map;
     }
     /**
@@ -165,7 +169,7 @@ public class ProdNotiService {
         if (mask){
             searchMap.put("visibility",1);
         }else {
-            searchMap.put("visibility",0);
+//            searchMap.put("visibility",0);
         }
         return null;
     }

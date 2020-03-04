@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface ProdNotificationDao {
     public ArrayList<ProdNotification> select(@Param("obj") HashMap<String,Object> args);
-    public int summary(@Param("obj") HashMap<String,Object> obj);
+    public HashMap<String,Object> summary();
     public int update(@Param("condition") HashMap<String,Object> condition, @Param("data")HashMap<String,Object> data);
     public int insert(List<HashMap<String,Object>> list);
     public int delete(@Param("obj")HashMap<String,Object> obj);

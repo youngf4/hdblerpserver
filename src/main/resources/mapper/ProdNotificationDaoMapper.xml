@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hdbl.erp.dao.ProdNotification">
+<mapper namespace="com.hdbl.erp.dao.ProdNotificationDao">
     <select id="select">
         select * from tb_notice_production
         <where>
@@ -29,13 +29,8 @@
         </where>
         <if test="obj.page and obj.pageSize">limit #{obj.page}, #{obj.pageSize}</if>
     </select>
-    <select id="summary">
-        select count(*) from tb_notice_production
-        <where>
-            <if test="obj.state">
-                and state = #{obj.state}
-            </if>
-        </where>
+    <select id="summary" resultType="HashMap">
+        select * from v_summary
     </select>
 
 
@@ -120,9 +115,11 @@
         </where>
     </delete>
     <insert id="insert">
-        insert into tb_notice_production(state,visibility,notice_number,working_number,order_unit,delivery_method,delivery_state,delivery_place,is_in_batches,delivery_date,remark,compiling_person,submit_time,auditor,audit_time,audit_remark,approver,approve_time,approve_remark)
+        insert into tb_notice_production
+        (state,visibility,notice_number,working_number,order_unit,delivery_method,delivery_state,delivery_place,is_in_batches,delivery_date,remark,compiling_person,submit_time,auditor,audit_time,audit_remark,approver,approve_time,approve_remark)
+        values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.state},#{item.visibility},#{item.notice_number},#{item.working_number},#{item.orderUnit},#{item.deliveryMethod},#{item.deliveryState},#{item.deliveryPlace},#{item.isInBatches},#{item.deliveryDate},#{item.remark},#{item.compilingPerson},#{item.submitTime},#{item.auditor},#{item.auditTime},#{item.auditRemark},#{item.approver},#{item.approveTime},#{item.approveRemark})
+            (#{item.state},#{item.visibility},#{item.noticeNumber},#{item.workingNumber},#{item.orderUnit},#{item.deliveryMethod},#{item.deliveryState},#{item.deliveryPlace},#{item.isInBatches},#{item.deliveryDate},#{item.remark},#{item.compilingPerson},#{item.submitTime},#{item.auditor},#{item.auditTime},#{item.auditRemark},#{item.approver},#{item.approveTime},#{item.approveRemark})
         </foreach>
     </insert>
 
