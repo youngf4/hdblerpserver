@@ -37,4 +37,24 @@ public class ToolingProductServiceTest {
         List<HashMap> result = toolingProductService.getToolingProductsUntreated(searchMap);
         System.out.println(result);
     }
+
+    @Test
+    void modifyToolingProductTest(){
+        HashMap<String, Object> valueMap = new HashMap<>();
+        HashMap<String, Object> locationMap = new HashMap<>();
+        valueMap.put("state",3);
+        valueMap.put("processVersionId",3);
+        valueMap.put("processVersionNumber","V1");
+        locationMap.put("id",10);
+        int result = toolingProductService.modifyToolingProduct(locationMap, valueMap);
+        System.out.println(result);
+    }
+
+    @Test
+    void removeToolingProductTest(){
+        HashMap<String, Object> target = new HashMap<>();
+        target.put("id",10);
+        int result = toolingProductService.removeToolingProduct(target);
+        System.out.println(result);
+    }
 }

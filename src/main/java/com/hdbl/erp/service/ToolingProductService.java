@@ -32,7 +32,7 @@ public class ToolingProductService {
     /**
      * 插入
      * @param list
-     * @return 1-成功，2-失败
+     * @return 1-成功，0-失败
      */
     public int creatToolingProduct(List<ProductProducing> list){
         int result = productProducingDao.insert(list);
@@ -57,13 +57,14 @@ public class ToolingProductService {
     /**
      * 删除工装产品单
      * @param target
-     * @return
+     * @return -1：不允许删除，0：失败，other：删除记录数量
      */
     public int removeToolingProduct(HashMap<String,Object> target){
-        if(canRemove((int)target.get("id"))){
+        if(!canRemove((int)target.get("id"))){
+            return -1;
+        }else{
             return productProducingDao.delete(target);
         }
-        return 0;
     }
 
     /**
