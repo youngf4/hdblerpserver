@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hdbl.erp.dao.ProductBean">
+<mapper namespace="com.hdbl.erp.dao.ProductBeanDao">
     <select id="select">
         select * from tb_product
         <where>
@@ -52,6 +52,15 @@
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.drawingNumber},#{item.name},#{item.materialQuality},#{item.type})
         </foreach>
+    </insert>
+
+
+    <select id="getProductByDrawing" resultType="com.hdbl.erp.entity.ProductBean">
+        select * from tb_product where drawing_number = #{drawingNumber}
+    </select>
+    <insert id="addNewProduct" keyProperty="id" keyColumn="id">
+        insert into tb_product(drawing_number,name,material_quality,type)
+        values ( #{product.drawingNumber},#{product.name},#{product.materialQuality},#{product.type});
     </insert>
 
 </mapper>

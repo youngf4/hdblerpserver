@@ -1,86 +1,101 @@
 package com.hdbl.erp.service;
 
+import com.hdbl.erp.dao.ProductBeanDao;
 import com.hdbl.erp.dao.ProductProducingDao;
-import com.hdbl.erp.entity.ProductProducingBean;
+import com.hdbl.erp.entity.ProductBean;
+import com.hdbl.erp.entity.ProductProducingToolingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ToolingProductService {
 
     @Autowired
+    ProductBeanDao productBeanDao;
+
+    @Autowired
     ProductProducingDao productProducingDao;
 
-    /**
-     * 获取流程中的工装产品
-     * @param searchMap
-     * type==2 工装品
-     * stateBegin 2-工艺设计，3-工艺审核，4-工艺审核未通过
-     * stateEnd 5-生产中
-     * @return
-     */
-    public List<HashMap> getToolingProductsUntreated(HashMap<String,Object> searchMap){
-        searchMap.put("type",2);
-        searchMap.put("stateBegin", 2);
-        searchMap.put("stateEnd", 5);
-        return productProducingDao.select(searchMap);
-    }
 
     /**
-     * 插入
-     * @param list
-     * @return 1-成功，0-失败
+     * 按照指定的三个条件（或少）分页查询工装产品下单生产记录
+     *
+     * @param toolingProduct : 指定查询条件封装对象
+     * @param page           : 页码
+     * @param pageSize       : 页宽
+     * @return 返回查询到的工装产品下单生产记录列表
      */
-    public int creatToolingProduct(List<ProductProducingBean> list){
-        int result = productProducingDao.insert(list);
-        if(result==list.size()){
-            return 1;
-        }else{
-            return 0;
+    // TODO 调用时指定默认页码页宽
+    public List<ProductProducingToolingDTO> getToolingProducts(ProductProducingToolingDTO toolingProduct, int page, int pageSize) {
+        return productProducingDao.getToolingProducts(toolingProduct, (page - 1) * pageSize, pageSize);
+    }
+
+
+    /**
+     * 工装产品下单
+     *
+     * @param toolingProduct : 工装产品数据传输对象
+     * @return : 返回新增工装产品生产记录
+     */
+    // TODO 调用时对数据进行约束，保证ToolingProduct中的drawingNumber、name、materialQuality、productType必须有值
+    public ProductProducingToolingDTO orderToolingProduct(ProductProducingToolingDTO toolingProduct) {
+        // 获取工装产品ID，如果没有就新建
+        ProductBean product = productBeanDao.getProductByDrawing(toolingProduct.getDrawingNumber());
+        if (product == null) {
+            product = new ProductBean(toolingProduct);
+            productBeanDao.addNewProduct(product);
+            // System.out.println(product.getId()); //成功返回插入记录的id
         }
+        toolingProduct.setProductId(product.getId());
+        // 工装产品下单
+        productProducingDao.addToolingProductToProducing(toolingProduct);
+        return toolingProduct;
     }
 
     /**
-     * 修改工装产品单信息
-     * @param condition
-     * @param data
-     * @return
+     * 删除工装产品下单生产记录（单条）
+     *
+     * @param toolingProduct : 工装产品下单生产记录
+     * @param requesterId    : 请求发起人ID
+     * @return : 删除的工装产品下单记录ID
      */
-    public int modifyToolingProduct(HashMap<String,Object> condition,HashMap<String,Object> data){
-        return productProducingDao.update(condition,data);
-    }
-
-
-    /**
-     * 删除工装产品单
-     * @param target
-     * @return -1：不允许删除，0：失败，other：删除记录数量
-     */
-    public int removeToolingProduct(HashMap<String,Object> target){
-        if(!canRemove((int)target.get("id"))){
-            return -1;
-        }else{
-            return productProducingDao.delete(target);
+    public int removeToolingProduct(ProductProducingToolingDTO toolingProduct, int requesterId) {
+        //查询到工装产品记录
+        toolingProduct = productProducingDao.getToolingProducrById(toolingProduct.getId());
+        // 判断是否可删除
+        // 产品可删除状态：2-工艺设计，4-工艺审核未通过
+        // 请求人与下单人一致可删除
+        int state = toolingProduct.getState();
+        if (state == 2 || state == 4) {
+            if (toolingProduct.getCreaterId() == requesterId) {
+                // 执行逻辑删除，返回
+                productProducingDao.removeToolingProductById(toolingProduct.getId());
+                return toolingProduct.getId();
+            }
         }
+        // 不允许删除返回
+        return -1;
     }
 
     /**
-     * 判断可否删除
-     * 如果在[2,3,4] 工艺设计、工艺审核、审核未通过阶段阶段，可以修改，其他则不行
-     * @param id 待删除的工装品id
-     * @return true or false
+     * 删除工装产品下单生产记录（多条）
+     *
+     * @param toolingProductList : 工装产品下单生产记录列表
+     * @param requesterId        : 请求人ID
+     * @return : 已删除的工装产品下单生产记录ID列表
      */
-    private boolean canRemove(int id){
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("id",id);
-        HashMap<String,Object> resultMap = productProducingDao.select(map).get(0);
-        int state = (int)resultMap.get("state");
-        if(state>=2&&state<=4){
-            return true;
+    public List<Integer> removeToolingProducts(List<ProductProducingToolingDTO> toolingProductList, int requesterId) {
+        List<Integer> removedIdList = new ArrayList<>();
+        for (ProductProducingToolingDTO toolingProduct : toolingProductList) {
+            int result = removeToolingProduct(toolingProduct, requesterId);
+            if (result > 0) {
+                removedIdList.add(result);
+            }
         }
-        return false;
+        return removedIdList;
     }
+
 }

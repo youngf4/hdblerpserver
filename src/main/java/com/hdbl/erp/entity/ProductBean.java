@@ -11,7 +11,26 @@ public class ProductBean {
     private String drawingNumber; //图号
     private String name; //品名
     private String materialQuality;  //材质
-    private int type; //类型
+    private int type; //类型：工装or产品
+
+    public ProductBean() {
+    }
+
+    public ProductBean(ProductProducingToolingDTO toolingProduct) {
+        this.drawingNumber = toolingProduct.getDrawingNumber();
+        this.name = toolingProduct.getName();
+        this.materialQuality = toolingProduct.getMaterialQuality();
+        this.type = toolingProduct.getProductType();
+    }
+
+    public ProductBean(String drawingNumber, String name, String materialQuality, int type) {
+        this.drawingNumber = drawingNumber;
+        this.name = name;
+        this.materialQuality = materialQuality;
+        this.type = type;
+    }
+
+
 
     public int getId() {
         return id;
