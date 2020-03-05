@@ -3,7 +3,7 @@
 <mapper namespace="com.hdbl.erp.dao.ProcessHourDao">
 
    <!-- 广义覆盖查询 -->
-    <select id="getProcessHour" resultType="com.hdbl.erp.entity.ProcessHour">
+    <select id="getProcessHour" resultType="com.hdbl.erp.entity.ProcessHourBean">
         select * from tb_process_hour
         <where>
             <if test="obj.id"> id = #{ obj.id }</if>

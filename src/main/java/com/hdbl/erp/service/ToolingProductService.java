@@ -1,7 +1,7 @@
 package com.hdbl.erp.service;
 
 import com.hdbl.erp.dao.ProductProducingDao;
-import com.hdbl.erp.entity.ProductProducing;
+import com.hdbl.erp.entity.ProductProducingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public class ToolingProductService {
      * @param list
      * @return 1-成功，0-失败
      */
-    public int creatToolingProduct(List<ProductProducing> list){
+    public int creatToolingProduct(List<ProductProducingBean> list){
         int result = productProducingDao.insert(list);
         if(result==list.size()){
             return 1;

@@ -1,65 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hdbl.erp.dao.ProcessVersionDao">
-    <select id="select">
-        select * from tb_process_version
-        <where>
-            <if test="obj.id">and id = #{obj.id}</if>
-            <if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>
-            <if test="obj.updateTime">and update_time = #{obj.updateTime}</if>
-            <if test="obj.updater">and updater = #{obj.updater}</if>
-            <if test="obj.type">and type = #{obj.type}</if>
-            <if test="obj.productId">and product_id = #{obj.productId}</if>
-            <if test="obj.">and  = #{obj.}</if>
-            <if test="obj.versionNumber">and version_number = #{obj.versionNumber}</if>
-            <if test="obj.versionState">and version_state = #{obj.versionState}</if>
-        </where>
-        <if test="obj.page and obj.pageSize">limit #{obj.page}, #{obj.pageSize}</if>
+
+
+    <select id="getVersionById" resultMap="ProcessVersion" parameterType="int">
+        select * from tb_process_version where id = #{id};
     </select>
-    <update id="update">
-        update tb_process_version
-        <trim prefix="set" prefixOverrides="and">
-            <if test="data.id">and id = #{data.id}</if>
-            <if test="data.creatTime">and creat_time = #{data.creatTime}</if>
-            <if test="data.updateTime">and update_time = #{data.updateTime}</if>
-            <if test="data.updater">and updater = #{data.updater}</if>
-            <if test="data.type">and type = #{data.type}</if>
-            <if test="data.productId">and product_id = #{data.productId}</if>
-            <if test="data.">and  = #{data.}</if>
-            <if test="data.versionNumber">and version_number = #{data.versionNumber}</if>
-            <if test="data.versionState">and version_state = #{data.versionState}</if>
-        </trim>
-        <where>
-            <if test="condition.id">and id = #{condition.id}</if>
-            <if test="condition.creatTime">and creat_time = #{condition.creatTime}</if>
-            <if test="condition.updateTime">and update_time = #{condition.updateTime}</if>
-            <if test="condition.updater">and updater = #{condition.updater}</if>
-            <if test="condition.type">and type = #{condition.type}</if>
-            <if test="condition.productId">and product_id = #{condition.productId}</if>
-            <if test="condition.">and  = #{condition.}</if>
-            <if test="condition.versionNumber">and version_number = #{condition.versionNumber}</if>
-            <if test="condition.versionState">and version_state = #{condition.versionState}</if>
-        </where>
-    </update>
-    <delete id="delete">
-        delete from tb_process_version
-        <where>
-            <if test="obj.id">and id = #{obj.id}</if>
-            <if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>
-            <if test="obj.updateTime">and update_time = #{obj.updateTime}</if>
-            <if test="obj.updater">and updater = #{obj.updater}</if>
-            <if test="obj.type">and type = #{obj.type}</if>
-            <if test="obj.productId">and product_id = #{obj.productId}</if>
-            <if test="obj.">and  = #{obj.}</if>
-            <if test="obj.versionNumber">and version_number = #{obj.versionNumber}</if>
-            <if test="obj.versionState">and version_state = #{obj.versionState}</if>
-        </where>
-    </delete>
-    <insert id="insert">
-        insert into tb_process_version(updater,type,product_id,,version_number,version_state)
-        <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.updater},#{item.type},#{item.productId},#{item.},#{item.versionNumber},#{item.versionState})
-        </foreach>
-    </insert>
+    <select id="getVersionsByProduct" resultMap="ProcessVersion">
+        select * from tb_process_version where product_id = #{id} and type = #{type} and version_state = #{state};
+    </select>
+    <resultMap id="ProcessVersion" type="com.hdbl.erp.entity.ProcessVersionBean">
+        <id column="id" property="id" ></id>
+        <result property="creatTime" column="creat_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="updaterId" column="updater_id" />
+        <result property="productId" column="product_id" />
+        <result property="versionNumber" column="version_number" />
+        <result property="type" column="type" />
+        <result property="versionState" column="version_state" />
+        <collection property="processSequenceList" select="getProcessSequenceByVersionId" column="id" ofType="com.hdbl.erp.entity.ProcessSequenceBean" />
+    </resultMap>
+
+    <select id="getProcessSequenceByVersionId" resultMap="ProcessSequence">
+        SELECT
+          tps.*,
+          tp.name AS process_name,
+          ts.simple_name AS supplier_name
+        FROM
+          tb_process_sequence AS tps
+          LEFT JOIN tb_process AS tp
+          ON tps.process_id = tp.id
+          LEFT JOIN tb_supplier AS ts
+          ON tps.supplier_id = ts.id
+        WHERE version_id = #{id};
+    </select>
+    <resultMap id="ProcessSequence" type="com.hdbl.erp.entity.ProcessSequenceBean">
+        <id property="id" column="id" />
+        <result property="creatTime" column="creat_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="versionId" column="version_id" />
+        <result property="sequenceNumber" column="sequence_number" />
+        <result property="processId" column="process_id" />
+        <result property="processName" column="process_name" />
+        <result property="executionStyle" column="execution_style" />
+        <result property="supplierId" column="supplier_id" />
+        <result property="supplierName" column="supplier_name" />
+        <result property="isDouble" column="is_double" />
+        <collection property="processHourList" select="getProcessHourByProcessId" column="id" ofType="com.hdbl.erp.entity.ProcessHourBean"/>
+    </resultMap>
+
+    <select id="getProcessHourByProcessId" resultType="com.hdbl.erp.entity.ProcessHourBean" parameterType="int">
+        SELECT
+          tph.*,
+          te.number as equipment_number,
+          te.name as equipment_name
+        FROM
+          tb_process_hour AS tph
+          LEFT JOIN tb_equipment AS te
+          ON tph.equipment_id = te.id
+        WHERE process_sequence_id = #{id}
+    </select>
 
 </mapper>

@@ -5,7 +5,6 @@ import com.hdbl.erp.entity.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import sun.security.util.Cache;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,6 +15,18 @@ import java.util.List;
 @SpringBootTest
 public class TestYF {
 
+    /*
+    复杂查询测试
+     */
+    @Autowired
+    ProcessVersionDao processVersionDao;
+
+    @Test
+    void testGetProcessVersionTest(){
+//        ProcessVersionBean result =  processVersionDao.getVersionById(2);
+        List<ProcessVersionBean> resultList =  processVersionDao.getVersionsByProduct(1,2,true);
+        System.out.println(resultList);
+    }
     /*---------------------------
      * test on ActualWorkhourDao
      * test OK
@@ -492,26 +503,26 @@ public class TestYF {
         System.out.println("----------testSelectOnProcessHourDao----------");
         HashMap<String,Object> testMap = new HashMap<>();
         testMap.put("processId" , 2);
-        List<ProcessHour> result = processHourDao.getProcessHour(testMap);
-        for(ProcessHour o : result){
+        List<ProcessHourBean> result = processHourDao.getProcessHour(testMap);
+        for(ProcessHourBean o : result){
             System.out.println(o);
         }
     }
 
-    @Test
-    void testInsertOnProcessHourDao(){
-        System.out.println("----------testInsertOnProcessHourDao----------");
-        ArrayList<ProcessHour> list = new ArrayList<>();
-        list.add(new ProcessHour(1,1,12,15));
-        list.add(new ProcessHour(1,2,10,10));
-        list.add(new ProcessHour(1,3,12,10));
-        list.add(new ProcessHour(2,1,12,15));
-        list.add(new ProcessHour(2,2,5,7));
-        list.add(new ProcessHour(2,3,12,10));
-        list.add(new ProcessHour(2,4,5,15));
-        int result = processHourDao.insertProcessHour(list);
-        System.out.println(result);
-    }
+//    @Test
+//    void testInsertOnProcessHourDao(){
+//        System.out.println("----------testInsertOnProcessHourDao----------");
+//        ArrayList<ProcessHourBean> list = new ArrayList<>();
+//        list.add(new ProcessHourBean(1,1,12,15));
+//        list.add(new ProcessHourBean(1,2,10,10));
+//        list.add(new ProcessHourBean(1,3,12,10));
+//        list.add(new ProcessHourBean(2,1,12,15));
+//        list.add(new ProcessHourBean(2,2,5,7));
+//        list.add(new ProcessHourBean(2,3,12,10));
+//        list.add(new ProcessHourBean(2,4,5,15));
+//        int result = processHourDao.insertProcessHour(list);
+//        System.out.println(result);
+//    }
 
     @Test
     void testUpdateOnProcessHourDao(){

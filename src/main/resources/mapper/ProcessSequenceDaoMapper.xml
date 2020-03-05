@@ -1,72 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hdbl.erp.dao.ProcessSequence">
-    <select id="select">
-        select * from tb_process_sequence
-        <where>
-            <if test="obj.id">and id = #{obj.id}</if>
-            <if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>
-            <if test="obj.updateTime">and update_time = #{obj.updateTime}</if>
-            <if test="obj.updaterId">and updater_id = #{obj.updaterId}</if>
-            <if test="obj.productId">and product_id = #{obj.productId}</if>
-            <if test="obj.drawingNumber">and drawing_number = #{obj.drawingNumber}</if>
-            <if test="obj.versionId">and version_id = #{obj.versionId}</if>
-            <if test="obj.versionNumber">and version_number = #{obj.versionNumber}</if>
-            <if test="obj.sequenceNumber">and sequence_number = #{obj.sequenceNumber}</if>
-            <if test="obj.processId">and process_id = #{obj.processId}</if>
-            <if test="obj.processName">and process_name = #{obj.processName}</if>
-            <if test="obj.executionStyle">and execution_style = #{obj.executionStyle}</if>
-            <if test="obj.supplierId">and supplier_id = #{obj.supplierId}</if>
-            <if test="obj.isDouble">and is_double = #{obj.isDouble}</if>
-        </where>
-        <if test="obj.page and obj.pageSize">limit #{obj.page}, #{obj.pageSize}</if>
-    </select>
-    <update id="update">
-        update tb_process_sequence
-        <trim prefix="set" prefixOverrides="and">
-            <if test="data.id">and id = #{data.id}</if>
-            <if test="data.creatTime">and creat_time = #{data.creatTime}</if>
-            <if test="data.updateTime">and update_time = #{data.updateTime}</if>
-            <if test="data.updaterId">and updater_id = #{data.updaterId}</if>
-            <if test="data.productId">and product_id = #{data.productId}</if>
-            <if test="data.drawingNumber">and drawing_number = #{data.drawingNumber}</if>
-            <if test="data.versionId">and version_id = #{data.versionId}</if>
-            <if test="data.versionNumber">and version_number = #{data.versionNumber}</if>
-            <if test="data.sequenceNumber">and sequence_number = #{data.sequenceNumber}</if>
-            <if test="data.processId">and process_id = #{data.processId}</if>
-            <if test="data.processName">and process_name = #{data.processName}</if>
-            <if test="data.executionStyle">and execution_style = #{data.executionStyle}</if>
-            <if test="data.supplierId">and supplier_id = #{data.supplierId}</if>
-            <if test="data.isDouble">and is_double = #{data.isDouble}</if>
-        </trim>
-        <where>
-            condition
-        </where>
-    </update>
-    <delete id="delete">
-        delete from tb_process_sequence
-        <where>
-            <if test="condition.id">and id = #{condition.id}</if>
-            <if test="condition.creatTime">and creat_time = #{condition.creatTime}</if>
-            <if test="condition.updateTime">and update_time = #{condition.updateTime}</if>
-            <if test="condition.updaterId">and updater_id = #{condition.updaterId}</if>
-            <if test="condition.productId">and product_id = #{condition.productId}</if>
-            <if test="condition.drawingNumber">and drawing_number = #{condition.drawingNumber}</if>
-            <if test="condition.versionId">and version_id = #{condition.versionId}</if>
-            <if test="condition.versionNumber">and version_number = #{condition.versionNumber}</if>
-            <if test="condition.sequenceNumber">and sequence_number = #{condition.sequenceNumber}</if>
-            <if test="condition.processId">and process_id = #{condition.processId}</if>
-            <if test="condition.processName">and process_name = #{condition.processName}</if>
-            <if test="condition.executionStyle">and execution_style = #{condition.executionStyle}</if>
-            <if test="condition.supplierId">and supplier_id = #{condition.supplierId}</if>
-            <if test="condition.isDouble">and is_double = #{condition.isDouble}</if>
-        </where>
-    </delete>
-    <insert id="insert">
-        insert into tb_process_sequence(updater_id,product_id,drawing_number,version_id,version_number,sequence_number,process_id,process_name,execution_style,supplier_id,is_double)
-        <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.updaterId},#{item.productId},#{item.drawingNumber},#{item.versionId},#{item.versionNumber},#{item.sequenceNumber},#{item.processId},#{item.processName},#{item.executionStyle},#{item.supplierId},#{item.isDouble})
-        </foreach>
-    </insert>
+<mapper namespace="com.hdbl.erp.dao.ProcessSequenceDTO">
+    <!--<select id="select">-->
+        <!--select * from tb_process_sequence-->
+        <!--<where>-->
+            <!--<if test="obj.id">and id = #{obj.id}</if>-->
+            <!--<if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>-->
+            <!--<if test="obj.updateTime">and update_time = #{obj.updateTime}</if>-->
+            <!--<if test="obj.versionId">and version_id = #{obj.versionId}</if>-->
+            <!--<if test="obj.sequenceNumber">and sequence_number = #{obj.sequenceNumber}</if>-->
+            <!--<if test="obj.processId">and process_id = #{obj.processId}</if>-->
+            <!--<if test="obj.executionStyle">and execution_style = #{obj.executionStyle}</if>-->
+            <!--<if test="obj.supplierId">and supplier_id = #{obj.supplierId}</if>-->
+            <!--<if test="obj.isDouble">and is_double = #{obj.isDouble}</if>-->
+        <!--</where>-->
+        <!--<if test="obj.page and obj.pageSize">limit #{obj.page}, #{obj.pageSize}</if>-->
+    <!--</select>-->
+    <!--<update id="update">-->
+        <!--update tb_process_sequence-->
+        <!--<trim prefix="set" prefixOverrides="and">-->
+            <!--<if test="data.id">and id = #{data.id}</if>-->
+            <!--<if test="data.creatTime">and creat_time = #{data.creatTime}</if>-->
+            <!--<if test="data.updateTime">and update_time = #{data.updateTime}</if>-->
+            <!--<if test="data.versionId">and version_id = #{data.versionId}</if>-->
+            <!--<if test="data.sequenceNumber">and sequence_number = #{data.sequenceNumber}</if>-->
+            <!--<if test="data.processId">and process_id = #{data.processId}</if>-->
+            <!--<if test="data.executionStyle">and execution_style = #{data.executionStyle}</if>-->
+            <!--<if test="data.supplierId">and supplier_id = #{data.supplierId}</if>-->
+            <!--<if test="data.isDouble">and is_double = #{data.isDouble}</if>-->
+        <!--</trim>-->
+        <!--<where>-->
+            <!--<if test="condition.versionId">and version_id = #{condition.versionId}</if>-->
+            <!--<if test="condition.sequenceNumber">and sequence_number = #{condition.sequenceNumber}</if>-->
+            <!--<if test="condition.processId">and process_id = #{condition.processId}</if>-->
+            <!--<if test="condition.executionStyle">and execution_style = #{condition.executionStyle}</if>-->
+            <!--<if test="condition.supplierId">and supplier_id = #{condition.supplierId}</if>-->
+            <!--<if test="condition.isDouble">and is_double = #{condition.isDouble}</if>-->
+        <!--</where>-->
+    <!--</update>-->
+    <!--<delete id="delete">-->
+        <!--delete from tb_process_sequence-->
+        <!--<where>-->
+            <!--<if test="obj.id">and id = #{obj.id}</if>-->
+            <!--<if test="obj.creatTime">and creat_time = #{obj.creatTime}</if>-->
+            <!--<if test="obj.updateTime">and update_time = #{obj.updateTime}</if>-->
+            <!--<if test="obj.versionId">and version_id = #{obj.versionId}</if>-->
+            <!--<if test="obj.sequenceNumber">and sequence_number = #{obj.sequenceNumber}</if>-->
+            <!--<if test="obj.processId">and process_id = #{obj.processId}</if>-->
+            <!--<if test="obj.executionStyle">and execution_style = #{obj.executionStyle}</if>-->
+            <!--<if test="obj.supplierId">and supplier_id = #{obj.supplierId}</if>-->
+            <!--<if test="obj.isDouble">and is_double = #{obj.isDouble}</if>-->
+        <!--</where>-->
+    <!--</delete>-->
+    <!--<insert id="insert">-->
+        <!--insert into tb_process_sequence(version_id,sequence_number,process_id,execution_style,supplier_id,is_double)-->
+        <!--<foreach collection="list" item="item" index="index" separator=",">-->
+            <!--(#{item.versionId},#{item.sequenceNumber},#{item.processId},#{item.executionStyle},#{item.supplierId},#{item.isDouble})-->
+        <!--</foreach>-->
+    <!--</insert>-->
 
 </mapper>
