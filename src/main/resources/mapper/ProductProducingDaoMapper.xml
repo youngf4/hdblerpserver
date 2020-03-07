@@ -94,11 +94,13 @@
         </foreach>
     </insert>
 
+    <!-- 添加工装品订单 -->
     <insert id="addToolingProductToProducing" keyProperty="id" keyColumn="id">
         insert into tb_product_producing( creater_id, type, state, product_id, number, remark, visibility   )
         values ( #{toolingProduct.createrId}, 1, 2, #{toolingProduct.productId}, #{toolingProduct.number}, #{toolingProduct.remark}, #{toolingProduct.visibility});
     </insert>
 
+    <!-- 查询工装品  单条记录  指定ID -->
     <select id="getToolingProducrById" resultType="com.hdbl.erp.entity.ProductProducingToolingDTO">
         SELECT *
         FROM v_product_tooling
@@ -110,6 +112,7 @@
         delete from tb_product_producing where id = #{id}
     </delete>
 
+    <!-- 查询工装品  多条记录  指定条件  分页查询 -->
     <select id="getToolingProducts" resultType="com.hdbl.erp.entity.ProductProducingToolingDTO">
         SELECT *
         FROM v_product_tooling
@@ -120,4 +123,19 @@
         </where>
         limit #{ beginIndex }, #{ pageSize }
     </select>
+
+    <!-- 查询某工艺版本投产的产品数量 -->
+    <select id="countProductsProducingByProcessVersion" resultType="java.lang.Integer">
+        select count(*) from tb_product_producing where process_version_id = #{versionId} and state &gt; 2;
+    </select>
+
+    <!-- 工艺设计提交，进入工艺审核 -->
+    <update id="updatePruductToProcessAudit">
+        update tb_product_producing set process_version_id = #{processVersionId} , state = 3 where id = #{productPruducingId};
+    </update>
+
+    <!-- 工艺审核，yes-5 or no-4 -->
+    <update id="updateProductPruducingState">
+        update tb_product_producing set state = #{state} where id = #{productProducingId}
+    </update>
 </mapper>

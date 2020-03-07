@@ -2,60 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hdbl.erp.dao.ProcessHourDao">
 
-   <!-- 广义覆盖查询 -->
-    <select id="getProcessHour" resultType="com.hdbl.erp.entity.ProcessHourBean">
-        select * from tb_process_hour
-        <where>
-            <if test="obj.id"> id = #{ obj.id }</if>
-            <if test="obj.creatTime"> and creat_time = #{ obj.creatTime }</if>
-            <if test="obj.updateTime"> and update_time = #{ obj.updateTime }</if>
-            <if test="obj.processId"> and process_id = #{ obj.processId }</if>
-            <if test="obj.equipmentId"> and equipment_id = #{ obj.equipmentId }</if>
-            <if test="obj.debugHour"> and debug_hour = #{ obj.debugHour }</if>
-            <if test="obj.quotaHour"> and quota_hour = #{ obj.quotaHour }</if>
-        </where>
-    </select>
 
-    <!-- 批量插入工艺工时记录 -->
-    <insert id="insertProcessHour">
-        insert into tb_process_hour( process_id,equipment_id,debug_hour,quota_hour)
+    <!-- 新建工艺版本 -->
+    <insert id="insertNewProcessVersion" keyProperty="id" keyColumn="id">
+        insert into tb_process_hour( process_sequence_id,equipment_id,debug_hour,quota_hour)
         values
-        <foreach collection="list" item="item" index="index" separator=",">
-            ( #{item.processId},#{item.equipmentId},#{item.debugHour},#{item.quotaHour})
+        <foreach collection="newVersionHourList" item="item" index="index" separator=",">
+            ( #{item.processSequenceId},#{item.equipmentId},#{item.debugHour},#{item.quotaHour})
         </foreach>
     </insert>
 
-    <!-- 广义覆盖修改 -->
-    <update id="updateProcessHour">
-        update tb_process_hour
-        <trim prefix="set" prefixOverrides="and">
-            <if test="valueMap.processId"> and process_id = #{ valueMap.processId }</if>
-            <if test="valueMap.equipmentId"> and equipment_id = #{ valueMap.equipmentId }</if>
-            <if test="valueMap.debugHour"> and debug_hour = #{ valueMap.debugHour }</if>
-            <if test="valueMap.quotaHour"> and quota_hour = #{ valueMap.quotaHour }</if>
-        </trim>
-        <where>
-            <if test="location.id"> id = #{ location.id }</if>
-            <if test="location.creatTime"> and creat_time = #{ location.creatTime }</if>
-            <if test="location.updateTime"> and update_time = #{ location.updateTime }</if>
-            <if test="location.processId"> and process_id = #{ location.processId }</if>
-            <if test="location.equipmentId"> and equipment_id = #{ location.equipmentId }</if>
-            <if test="location.debugHour"> and debug_hour = #{ location.debugHour }</if>
-            <if test="location.quotaHour"> and quota_hour = #{ location.quotaHour }</if>
-        </where>
-    </update>
-
-    <!-- 广义覆盖删除 -->
-    <delete id="deleteProcessHour">
-        delete from tb_process_hour
-        <where>
-            <if test="obj.id"> id = #{ obj.id }</if>
-            <if test="obj.creatTime"> and creat_time = #{ obj.creatTime }</if>
-            <if test="obj.updateTime"> and update_time = #{ obj.updateTime }</if>
-            <if test="obj.processId"> and process_id = #{ obj.processId }</if>
-            <if test="obj.equipmentId"> and equipment_id = #{ obj.equipmentId }</if>
-            <if test="obj.debugHour"> and debug_hour = #{ obj.debugHour }</if>
-            <if test="obj.quotaHour"> and quota_hour = #{ obj.quotaHour }</if>
-        </where>
-    </delete>
 </mapper>

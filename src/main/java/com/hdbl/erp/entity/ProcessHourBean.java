@@ -17,6 +17,14 @@ public class ProcessHourBean {
 
     public ProcessHourBean() {}
 
+    public ProcessHourBean(int equipmentId, String equipmentNumber, String equipmentName, int debugHour, int quotaHour) {
+        this.equipmentId = equipmentId;
+        this.equipmentNumber = equipmentNumber;
+        this.equipmentName = equipmentName;
+        this.debugHour = debugHour;
+        this.quotaHour = quotaHour;
+    }
+
     @Override
     public String toString() {
         return "ProcessHourBean{" +

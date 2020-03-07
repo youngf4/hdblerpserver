@@ -10,13 +10,6 @@ import java.util.List;
 @Mapper
 public interface ProcessHourDao {
 
-    List<ProcessHourBean> getProcessHour(@Param("obj") HashMap<String, Object> obj);
-
-    int insertProcessHour(List<ProcessHourBean> equipments);
-
-    int updateProcessHour(@Param("valueMap") HashMap<String, Object> valueMap, @Param("location") HashMap<String, Object> location);
-
-    int deleteProcessHour(@Param("obj") HashMap<String, Object> obj);
-
-
+    // 新建工艺版本
+    int insertNewProcessVersion(@Param("newVersionHourList") List<ProcessHourBean> newVersionHourList);
 }

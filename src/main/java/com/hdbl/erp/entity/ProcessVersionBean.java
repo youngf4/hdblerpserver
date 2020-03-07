@@ -11,11 +11,18 @@ public class ProcessVersionBean {
     private int updaterId;
     private int productId;
     private String versionNumber;
-    private int type;
-    private boolean versionState;
+    private int type; //生产or返修
+    private boolean versionState = true;
     private List<ProcessSequenceBean> processSequenceList; //工艺版本中的工序
 
     public ProcessVersionBean() {
+    }
+
+    public ProcessVersionBean(int updaterId, int productId, String versionNumber, int type) {
+        this.updaterId = updaterId;
+        this.productId = productId;
+        this.versionNumber = versionNumber;
+        this.type = type;
     }
 
     @Override

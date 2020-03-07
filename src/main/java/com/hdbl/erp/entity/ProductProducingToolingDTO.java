@@ -24,7 +24,9 @@ public class ProductProducingToolingDTO {
 
     public ProductProducingToolingDTO() {
     }
-
+    public ProductProducingToolingDTO(int id) {
+        this.id = id;
+    }
     @Override
     public String toString() {
         return "ProductProducingToolingDTO{" +

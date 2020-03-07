@@ -1,154 +1,136 @@
 package com.hdbl.erp.service;
 
 
-
+import com.hdbl.erp.dao.ProcessHourDao;
+import com.hdbl.erp.dao.ProcessSequenceDao;
 import com.hdbl.erp.dao.ProcessVersionDao;
+import com.hdbl.erp.dao.ProductProducingDao;
+import com.hdbl.erp.entity.ProcessHourBean;
+import com.hdbl.erp.entity.ProcessSequenceBean;
 import com.hdbl.erp.entity.ProcessVersionBean;
+import com.hdbl.erp.entity.ProductBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+@Service
 public class ProcessVersionService {
 
     @Autowired
     ProcessVersionDao processVersionDao;
 
+    @Autowired
+    ProcessSequenceDao processSequenceDao;
+
+    @Autowired
+    ProcessHourDao processHourDao;
+
+
+    @Autowired
+    ProductProducingDao productProducingDao;
+
     /**
      * 获取指定的工艺版本
+     *
      * @param version_id : 指定工艺版本ID
      * @return
      */
-    public ProcessVersionBean getProcessVersionById(int version_id){
+    public ProcessVersionBean getProcessVersionById(int version_id) {
         return processVersionDao.getVersionById(version_id);
     }
-
+    // TODO 在前端发送产品生产记录ID进行工艺数据查询时，在controller层判断其是否已经进行了工艺设计
+    // 如果进行了工艺设计，则查询其投产的工艺版本
+    // 如果将要进行工艺设计，则查询所有的工艺版本
     /**
      * 获取指定产品的所有“逻辑存在的”工艺版本数据
+     *
      * @param product_id
      * @param type : 生产工艺/返修工艺
      * @return
      */
-    public List<ProcessVersionBean> getVersionsByProduct(int product_id, int type){
+    public List<ProcessVersionBean> getVersionsByProduct(int product_id, int type) {
         return processVersionDao.getVersionsByProduct(product_id, type, true);
     }
 
     /**
-     * 提交工艺设计，进入工艺审核
-     * @param product_id : 产品ID
-     * @param version_id : 使用的工艺版本ID
-     * @return
+     * 提交工艺设计==>进入工艺审核
+     *
+     * @param productPruducingId : 产品生产记录ID
+     * @param versionId : 使用的工艺版本ID
+     * @return : 状态码
+     *        1：成功
+     *        0：失败
      */
-    public int submitProcess(int product_id, int version_id){
-        //
+    public int submitProcess(int productPruducingId, int versionId) {
+        int result = productProducingDao.updatePruductToProcessAudit(productPruducingId, versionId);
+        if(result == 1){
+            return 1;
+        }
         return 0;
     }
 
-    // 新建工艺工时表
+    /**
+     * 工艺路线审核
+     * @param productProducingId : 产品生产记录ID
+     * @param result : 审核结果
+     * @return
+     */
+    public int auditProcess(int productProducingId, boolean result){
+        if(result){
+            productProducingDao.updateProductPruducingState(productProducingId,5);
+        }else{
+            productProducingDao.updateProductPruducingState(productProducingId,4);
+        }
+        return 1;
+    }
+
+
+    /**
+     * 新建工艺工时表
+     * @param newProcessVersion
+     * @return
+     */
+    // TODO 需要在controller层关联产品和人员信息，并自动生成版本号
+    public int addNewProcessVersion(ProcessVersionBean newProcessVersion){
+        // 插入工艺版本表并获取主键，将主键与工序关联
+        processVersionDao.insertNewProcessVersion(newProcessVersion);
+        for(ProcessSequenceBean processSequence : newProcessVersion.getProcessSequenceList()){
+            processSequence.setVersionId(newProcessVersion.getId());
+        }
+        // 插入工艺工序表并获取主键，将主键与工时关联，关联后插入工时记录
+        processSequenceDao.insertNewProcessVersion(newProcessVersion.getProcessSequenceList());
+        for(ProcessSequenceBean processSequence : newProcessVersion.getProcessSequenceList()){
+            for(ProcessHourBean processHour : processSequence.getProcessHourList()){
+                processHour.setProcessSequenceId(processSequence.getId());
+            }
+            processHourDao.insertNewProcessVersion(processSequence.getProcessHourList());
+        }
+        return 1;
+    }
+
 
     // 修改工艺工时表
 
-    // 验证工艺工时表数据格式
-
-    // 判断是否
-
-
-
-//    /**
-//     * 获取一个产品所有的工艺版本
-//     * @param searchParam
-//     * @return List<HashMap>
-//     */
-//    public List<HashMap> getProcessVersions(HashMap<String, Object> searchParam){
-//        List<ProcessVersion> processVersionList = processVersionDao.select(searchParam);
-//        List resultMap = new ArrayList();
-//        for(ProcessVersion pv : processVersionList){
-//            resultMap.add(getProcessVersion(pv.getId()));
-//        }
-//        return resultMap;
-//    }
 
     /**
-     * 获取产品指定的工艺版本
-     * @param versionId
-     * @return
-     * ProcessVersion{
-     *      version : ProcessVersion ,
-     *      processes : [
-     *          {   process : ProcessSequence ,
-     *              equipHour : [ProcessHourBean]
-     *          }
-     *      ]
-     * }
+     * 删除工艺版本
+     *
+     * @param id : 要删除的工艺版本ID --- 注意不是版本号
+     * @return : 状态代码
+     * -1 : 工艺版本有产品投产
+     * 1 : 删除成功
      */
-//    public HashMap<String,Object> getProcessVersion(int versionId){
-//        //获取所有工艺工时记录
-//        HashMap<String, Object> searchParam = new HashMap<>();
-//        searchParam.put("versionId", versionId);
-//        List<ProcessVersion> processVersionList = processVersionDao.select(searchParam);
-//        List<ProcessSequence> processSequenceList = processSequenceDao.select(searchParam);
-//        List<ProcessHourBean> processHourList = processHourDao.getProcessHour(searchParam);
-//        //封装返回
-//        HashMap<String, Object> processVersionData = new HashMap<>();
-//        processVersionData.put("version",processVersionList.get(0));
-//        ArrayList processesList = new ArrayList();
-//        for(ProcessSequence ps : processSequenceList){
-//            HashMap<String, Object> processSequenceData = new HashMap<>();
-//            processSequenceData.put("process",ps);
-//            ArrayList equipHourList = new ArrayList();
-//            for(ProcessHourBean ph : processHourList){
-//                if(ph.getProcessSequenceId()==ps.getId()){
-//                    equipHourList.add(ph);
-//                }
-//            }
-//            processSequenceData.put("equipHour",equipHourList);
-//            processesList.add(processSequenceData);
-//        }
-//        processVersionData.put("processes",processesList);
-//        return processVersionData;
-//    }
-
-//    public void addNewVersion(){}
+    public int removeProcessVersion(int id) {
+        // 判断是否处于可删除状态：即产品生产列表中该工艺版本有产品设计投产，状态>2
+        if (productProducingDao.countProductsProducingByProcessVersion(id) > 0) {
+            return -1;
+        }
+        // 逻辑删除，将其version_state设置为false
+        processVersionDao.removeProcessVersionById(id);
+        return 1;
+    }
 
 
 
-
-//
-//    public ProcessVersion create(HashMap<String,Object> proc){
-//        /**
-//         * 创建一个工艺工时版本
-//         * param:proc工艺工时参数
-//         * return c创建成功的工艺工时
-//         */
-//        ProcessVersion pv = this.isFormat(proc);
-//        if(pv==null)return null;
-//        if(this.confit(pv))return null;
-//        // TODO 新建逻辑并返回
-//        return null;
-//    }
-//    private boolean confit(ProcessVersion proc){
-//        // TODO 查重逻辑;
-//        return false;
-//    }
-
-
-//    private ProcessVersion isFormat(HashMap<String,Object> proc){
-//        /**
-//         * 判断hashmap是否是合理的工艺工时格式
-//         * param:proc 输入的工艺工时
-//         * return：null->格式不正确 !null->格式正确
-//         */
-//        return null;
-//    }
-
-
-//    private ArrayList<ProcessVersion> search(ProcessVersion proc){
-//        /**
-//         * 查询工艺工时
-//         * param:proc要查询的数据bean
-//         * param:是用or模式还是用and模式 根据用途具体讨论是否启用
-//         */
-//        // TODO 查寻逻辑
-//        return null;
-//    }
 }

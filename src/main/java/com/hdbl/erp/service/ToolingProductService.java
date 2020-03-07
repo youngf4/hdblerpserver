@@ -59,43 +59,45 @@ public class ToolingProductService {
      * 删除工装产品下单生产记录（单条）
      *
      * @param toolingProduct : 工装产品下单生产记录
-     * @param requesterId    : 请求发起人ID
      * @return : 删除的工装产品下单记录ID
+     * -1 产品正在生产
+     * -2 产品不存在
+     * id 删除产品ID
      */
-    public int removeToolingProduct(ProductProducingToolingDTO toolingProduct, int requesterId) {
+    public int removeToolingProduct(ProductProducingToolingDTO toolingProduct) {
         //查询到工装产品记录
         toolingProduct = productProducingDao.getToolingProducrById(toolingProduct.getId());
-        // 判断是否可删除
-        // 产品可删除状态：2-工艺设计，4-工艺审核未通过
-        // 请求人与下单人一致可删除
+        // 判断是否可删除，可删除状态：2-工艺设计，4-工艺审核未通过
+        if(toolingProduct == null){
+            return -2;
+        }
         int state = toolingProduct.getState();
         if (state == 2 || state == 4) {
-            if (toolingProduct.getCreaterId() == requesterId) {
-                // 执行逻辑删除，返回
-                productProducingDao.removeToolingProductById(toolingProduct.getId());
-                return toolingProduct.getId();
-            }
+            // 执行逻辑删除，返回
+            productProducingDao.removeToolingProductById(toolingProduct.getId());
+            return toolingProduct.getId();
         }
         // 不允许删除返回
         return -1;
     }
 
-    /**
-     * 删除工装产品下单生产记录（多条）
-     *
-     * @param toolingProductList : 工装产品下单生产记录列表
-     * @param requesterId        : 请求人ID
-     * @return : 已删除的工装产品下单生产记录ID列表
-     */
-    public List<Integer> removeToolingProducts(List<ProductProducingToolingDTO> toolingProductList, int requesterId) {
-        List<Integer> removedIdList = new ArrayList<>();
-        for (ProductProducingToolingDTO toolingProduct : toolingProductList) {
-            int result = removeToolingProduct(toolingProduct, requesterId);
-            if (result > 0) {
-                removedIdList.add(result);
-            }
-        }
-        return removedIdList;
-    }
+//    取消多条删除功能，只能单条删除
+//    /**
+//     * 删除工装产品下单生产记录（多条）
+//     *
+//     * @param toolingProductList : 工装产品下单生产记录列表
+//     * @param requesterId        : 请求人ID
+//     * @return : 已删除的工装产品下单生产记录ID列表
+//     */
+//    public List<Integer> removeToolingProducts(List<ProductProducingToolingDTO> toolingProductList, int requesterId) {
+//        List<Integer> removedIdList = new ArrayList<>();
+//        for (ProductProducingToolingDTO toolingProduct : toolingProductList) {
+//            int result = removeToolingProduct(toolingProduct, requesterId);
+//            if (result > 0) {
+//                removedIdList.add(result);
+//            }
+//        }
+//        return removedIdList;
+//    }
 
 }

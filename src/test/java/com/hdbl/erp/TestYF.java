@@ -490,59 +490,6 @@ public class TestYF {
         System.out.println(result);
     }
 
-    /* --------------------
-     * test on ProcessHourDao
-     * test OK
-     ---------------------- */
 
-    @Autowired
-    ProcessHourDao processHourDao;
-
-    @Test
-    void testSelectOnProcessHourDao(){
-        System.out.println("----------testSelectOnProcessHourDao----------");
-        HashMap<String,Object> testMap = new HashMap<>();
-        testMap.put("processId" , 2);
-        List<ProcessHourBean> result = processHourDao.getProcessHour(testMap);
-        for(ProcessHourBean o : result){
-            System.out.println(o);
-        }
-    }
-
-//    @Test
-//    void testInsertOnProcessHourDao(){
-//        System.out.println("----------testInsertOnProcessHourDao----------");
-//        ArrayList<ProcessHourBean> list = new ArrayList<>();
-//        list.add(new ProcessHourBean(1,1,12,15));
-//        list.add(new ProcessHourBean(1,2,10,10));
-//        list.add(new ProcessHourBean(1,3,12,10));
-//        list.add(new ProcessHourBean(2,1,12,15));
-//        list.add(new ProcessHourBean(2,2,5,7));
-//        list.add(new ProcessHourBean(2,3,12,10));
-//        list.add(new ProcessHourBean(2,4,5,15));
-//        int result = processHourDao.insertProcessHour(list);
-//        System.out.println(result);
-//    }
-
-    @Test
-    void testUpdateOnProcessHourDao(){
-        System.out.println("----------testUpdateOnProcessHourDao----------");
-        HashMap<String,Object> valueMap = new HashMap<>();
-        HashMap<String,Object> location = new HashMap<>();
-        valueMap.put("debugHour",10);
-        location.put("processId",2);
-        location.put("equipmentId",4);
-        int result = processHourDao.updateProcessHour(valueMap,location);
-        System.out.println(result);
-    }
-
-    @Test
-    void testDeleteOnProcessHourDao(){
-        System.out.println("----------testDeleteOnProcessHourDao----------");
-        HashMap<String,Object> obj = new HashMap<>();
-        obj.put("equipmentId",1);
-        int result = processHourDao.deleteProcessHour(obj);
-        System.out.println(result);
-    }
 
 }

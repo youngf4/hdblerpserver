@@ -16,10 +16,21 @@ public class ProcessSequenceBean {
     private String exeStye; //__执行属性（名称）
     private int supplierId; //供货商编号
     private int supplierName; //_供货商简称
-    private boolean isDouble; //加工方式
+    private boolean isSingle = true; //加工方式
     private List<ProcessHourBean> processHourList; //工序设备工时列表
 
     public ProcessSequenceBean() {
+    }
+
+    public ProcessSequenceBean( int sequenceNumber, int processId, String processName, int executionStyle, String exeStye, int supplierId, int supplierName, boolean isSingle) {
+        this.sequenceNumber = sequenceNumber;
+        this.processId = processId;
+        this.processName = processName;
+        this.executionStyle = executionStyle;
+        this.exeStye = exeStye;
+        this.supplierId = supplierId;
+        this.supplierName = supplierName;
+        this.isSingle = isSingle;
     }
 
     @Override
@@ -36,7 +47,7 @@ public class ProcessSequenceBean {
                 ", exeStye='" + exeStye + '\'' +
                 ", supplierId=" + supplierId +
                 ", supplierName=" + supplierName +
-                ", isDouble=" + isDouble +
+                ", isSingle=" + isSingle +
                 ", processHourList=" + processHourList +
                 '}';
     }
@@ -129,12 +140,12 @@ public class ProcessSequenceBean {
         this.supplierId = supplierId;
     }
 
-    public boolean isDouble() {
-        return isDouble;
+    public boolean isSingle() {
+        return isSingle;
     }
 
-    public void setDouble(boolean aDouble) {
-        isDouble = aDouble;
+    public void setSingle(boolean single) {
+        isSingle = single;
     }
 
     public List<ProcessHourBean> getProcessHourList() {

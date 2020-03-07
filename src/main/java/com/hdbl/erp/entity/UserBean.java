@@ -14,6 +14,9 @@ public class UserBean {
     private int  state;
     private String openid;
 
+    public UserBean() {
+    }
+
     public int getId() {
         return id;
     }
